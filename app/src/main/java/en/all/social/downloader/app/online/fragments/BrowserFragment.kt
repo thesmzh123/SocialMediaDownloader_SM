@@ -19,7 +19,11 @@ import android.webkit.*
 import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
 import com.find.lost.app.phone.utils.SharedPrefUtils
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
+import com.github.javiersantos.materialstyleddialogs.enums.Style
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.utils.Constants
@@ -297,5 +301,39 @@ class BrowserFragment(private val website: String) : BaseFragment() {
     @JavascriptInterface
     fun getData(pathvideo: String) {
         Log.d(TAGI, pathvideo)
+        var finalurl: String = pathvideo
+        finalurl = finalurl.replace("%3A".toRegex(), ":")
+        finalurl = finalurl.replace("%2F".toRegex(), "/")
+        finalurl = finalurl.replace("%3F".toRegex(), "?")
+        finalurl = finalurl.replace("%3D".toRegex(), "=")
+        finalurl = finalurl.replace("%26".toRegex(), "&")
+        val finalUrl = finalurl
+
+        val builder =
+            MaterialStyledDialog.Builder(requireActivity())
+        builder.setTitle(getString(R.string.congrats))
+            .setDescription(getString(R.string.download_this_video))
+            .setStyle(Style.HEADER_WITH_ICON)
+            .setIcon(R.drawable.ic_baseline_arrow_downward_24)
+            .withDialogAnimation(true)
+            .setPositiveText(getString(R.string.yes))
+            .onPositive(object : MaterialDialog.SingleButtonCallback {
+                override fun onClick(dialog: MaterialDialog, which: DialogAction) {
+
+                }
+            })
+            .setNeutralText(getString(R.string.copy))
+            .onNeutral(object : MaterialDialog.SingleButtonCallback {
+                override fun onClick(dialog: MaterialDialog, which: DialogAction) {
+
+                }
+            })
+            .setNegativeText(getString(R.string.watch))
+            .onNegative(object : MaterialDialog.SingleButtonCallback {
+                override fun onClick(dialog: MaterialDialog, which: DialogAction) {
+                }
+            })
+        val dialog = builder.build()
+        dialog.show()
     }
 }

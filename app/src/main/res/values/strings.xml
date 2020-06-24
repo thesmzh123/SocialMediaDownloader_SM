@@ -30,4 +30,10 @@
     <string name="twitter_download_text">All Social Media Downloader is a fast and free way for downloading and saving videos. Start by putting any twitter video URL in the box below and click download Button</string>
     <string name="linkedin_download_text">All Social Media Downloader is a fast and free way for downloading and saving videos. Start by putting any linkedin video URL in the box below and click download Button</string>
     <string name="fb_download_text">All Social Media Downloader is a fast and free way for downloading and saving videos. Start by putting any facebook video URL in the box below and click download Button</string>
+    <string name="congrats">Congratulations!</string>
+    <string name="download_this_video">Do you want to download this video?</string>
+    <string name="yes">Yes</string>
+    <string name="watch">Watch</string>
+    <string name="copy">Copy</string>
+
 </resources>

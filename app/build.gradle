@@ -85,7 +85,7 @@ dependencies {
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
-    implementation 'com.github.javiersantos:MaterialStyledDialogs:3.0.1'
+    implementation 'com.github.javiersantos:MaterialStyledDialogs:2.1'
 
 
 }
