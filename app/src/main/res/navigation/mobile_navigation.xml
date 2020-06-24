@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_home"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="en.all.social.downloader.app.online.fragments.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_whtsapp"
+        android:name="en.all.social.downloader.app.online.fragments.WhatsappStatusFragment"
+        android:label="@string/whatsapp_status_saver"
+        tools:layout="@layout/fragment_whatsapp_status" />
+    <fragment
+        android:id="@+id/nav_facebook"
+        android:name="en.all.social.downloader.app.online.fragments.DownloaderFragment"
+        android:label="@string/facebook_video_downloader"
+        tools:layout="@layout/fragment_downloader">
+        <argument
+            android:name="webAddress"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_twittetr"
+        android:name="en.all.social.downloader.app.online.fragments.DownloaderFragment"
+        android:label="@string/twitter_video_downloader"
+        tools:layout="@layout/fragment_downloader">
+        <argument
+            android:name="webAddress"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_instagram"
+        android:name="en.all.social.downloader.app.online.fragments.DownloaderFragment"
+        android:label="@string/instagram_video_downloader"
+        tools:layout="@layout/fragment_downloader">
+        <argument
+            android:name="webAddress"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_linkedin"
+        android:name="en.all.social.downloader.app.online.fragments.DownloaderFragment"
+        android:label="@string/linkedin_video_downloader"
+        tools:layout="@layout/fragment_downloader">
+        <argument
+            android:name="webAddress"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_tiktok"
+        android:name="en.all.social.downloader.app.online.fragments.DownloaderFragment"
+        android:label="@string/tiktok_video_downloader"
+        tools:layout="@layout/fragment_downloader">
+        <argument
+            android:name="webAddress"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/browserFragment"
+        android:name="en.all.social.downloader.app.online.fragments.BrowserFragment"
+        android:label="fragment_browser"
+        tools:layout="@layout/fragment_browser" />
+    <fragment
+        android:id="@+id/pasteLinkFragment"
+        android:name="en.all.social.downloader.app.online.fragments.PasteLinkFragment"
+        android:label="fragment_paste_link"
+        tools:layout="@layout/fragment_paste_link" />
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="en.all.social.downloader.app.online.fragments.DownloadFragment"
+        android:label="@string/my_downloads"
+        tools:layout="@layout/fragment_download" />
+</navigation>

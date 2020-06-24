@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF9D1B</color>
+    <color name="colorPrimaryDark">#FF9D1B</color>
+    <color name="colorAccent">#1E0C1C</color>
+    <color name="whtsappColor">#075E54</color>
+    <color name="fbColor">#3B5998</color>
+    <color name="linkedinColor">#0077B5</color>
+    <color name="tiktokColor">#1E0C1C</color>
+    <color name="twitterColor">#1D9FEF</color>
+    <color name="arrowWhtsappColor">#25D165</color>
+    <color name="arrowFbColor">#7CA6FD</color>
+    <color name="arrowInstaColor">#F99E6E</color>
+    <color name="arrowTikTokColor">#F7A4EE</color>
+    <color name="arrowTwitterColor">#A3D9FA</color>
+    <color name="centerColorInsta">#FD1D1D</color>
+    <color name="endColorInsta">#833AB4</color>
+    <color name="startColorInsta">#F77737</color>
+</resources>

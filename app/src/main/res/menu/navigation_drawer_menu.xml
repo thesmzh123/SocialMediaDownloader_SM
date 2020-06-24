@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home_run"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/nav_whtsapp"
+        android:icon="@drawable/whatsapp_icon"
+        android:visible="false"
+        android:title="@string/whatsapp_status_saver" />
+    <item
+        android:id="@+id/nav_facebook"
+        android:icon="@drawable/ic_facebook"
+        android:title="@string/facebook_video_downloader" />
+    <item
+        android:id="@+id/nav_twittetr"
+        android:icon="@drawable/ic_twitter"
+        android:title="@string/twitter_video_downloader" />
+    <item
+        android:id="@+id/nav_instagram"
+        android:icon="@drawable/ic_instagram_sketched"
+        android:title="@string/instagram_video_downloader" />
+    <item
+        android:id="@+id/nav_linkedin"
+        android:icon="@drawable/ic_linkedin"
+        android:title="@string/linkedin_video_downloader" />
+    <item
+        android:id="@+id/nav_tiktok"
+        android:icon="@drawable/ic_tiktok"
+        android:title="@string/tiktok_video_downloader" />
+</menu>

@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">All Social Media Downloader</string>
+    <string name="download_videos_fvt">Download Videos from your favourite sites</string>
+    <string name="permission_message">You need to enable these permisiion to use the app,</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="whatsapp_status_saver">WhatsApp Status Saver</string>
+    <string name="facebook_video_downloader">Facebook Video Downloader</string>
+    <string name="twitter_video_downloader">Twitter Video Downloader</string>
+    <string name="instagram_video_downloader">Instagram Video Downloader</string>
+    <string name="linkedin_video_downloader">Linkedin Video Downloader</string>
+    <string name="tiktok_video_downloader">TikTok Video Downloader</string>
+    <string name="browse">Browse</string>
+    <string name="paste_link">Paste Link</string>
+    <string name="facebook_website">https://m.facebook.com/</string>
+    <string name="twitter_website">https://mobile.twitter.com</string>
+    <string name="linkedin_website">https://www.linkedin.com</string>
+    <string name="tiktok_website">https://www.tiktok.com</string>
+    <string name="instagram_website">https://www.instagram.com</string>
+    <string name="my_downloads">My Downloads</string>
+    <string name="proceed">Proceed</string>
+    <string name="download_">Download</string>
+    <string name="paste_your_video_link_here">Paste your video url here</string>
+    <string name="how_to_use">How to Use?</string>
+    <string name="insta_download_text">All Social Media Downloader is a fast and free way for downloading and saving videos. Start by putting any instagram video URL in the box below and click download Button</string>
+    <string name="tiktok_download_text">All Social Media Downloader is a fast and free way for downloading and saving videos. Start by putting any tiktok video URL in the box below and click download Button</string>
+    <string name="twitter_download_text">All Social Media Downloader is a fast and free way for downloading and saving videos. Start by putting any twitter video URL in the box below and click download Button</string>
+    <string name="linkedin_download_text">All Social Media Downloader is a fast and free way for downloading and saving videos. Start by putting any linkedin video URL in the box below and click download Button</string>
+    <string name="fb_download_text">All Social Media Downloader is a fast and free way for downloading and saving videos. Start by putting any facebook video URL in the box below and click download Button</string>
+</resources>
