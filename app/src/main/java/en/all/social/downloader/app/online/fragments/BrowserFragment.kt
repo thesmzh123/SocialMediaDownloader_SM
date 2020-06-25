@@ -3,7 +3,7 @@
 package en.all.social.downloader.app.online.fragments
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
+import android.content.*
 import android.graphics.Bitmap
 import android.net.http.SslCertificate
 import android.net.http.SslError
@@ -21,12 +21,15 @@ import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.find.lost.app.phone.utils.InternetConnection
 import com.find.lost.app.phone.utils.SharedPrefUtils
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.github.javiersantos.materialstyleddialogs.enums.Style
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import en.all.social.downloader.app.online.R
+import en.all.social.downloader.app.online.activities.FbVideoWatchActivity
 import en.all.social.downloader.app.online.utils.Constants
+import en.all.social.downloader.app.online.utils.Constants.FB_FOLDER
 import en.all.social.downloader.app.online.utils.Constants.TAGI
 import en.all.social.downloader.app.online.utils.JavascriptNotation
 import kotlinx.android.synthetic.main.fragment_browser.view.*
@@ -156,24 +159,28 @@ class BrowserFragment(private val website: String) : BaseFragment() {
                 // Don't use the argument url here since navigation to that URL might have been
                 // cancelled due to SSL error
 
-                if (view.url.contains(getString(R.string.twitter_website))) {
-                    if (isAdded) {
-                        if (!SharedPrefUtils.getBooleanData(requireActivity(), "isTwitter")) {
-//                        guideDialog(true)
+                try {
+                    if (view.url.contains(getString(R.string.twitter_website))) {
+                        if (isAdded) {
+                            if (!SharedPrefUtils.getBooleanData(requireActivity(), "isTwitter")) {
+                                //                        guideDialog(true)
+                            }
                         }
                     }
-                }
-                if (view.url.contains(getString(R.string.facebook_website))) {
-                    root!!.fab.visibility = View.GONE
-                    val handler = Handler()
-                    handler.postDelayed({
-                        webview!!.loadUrl(JavascriptNotation.value)
-                    }, 3000)
-                    if (isAdded) {
-                        if (!SharedPrefUtils.getBooleanData(requireActivity(), "isFacebook")) {
-//                        guideDialog(false)
+                    if (view.url.contains(getString(R.string.facebook_website))) {
+                        root!!.fab.visibility = View.GONE
+                        val handler = Handler()
+                        handler.postDelayed({
+                            webview!!.loadUrl(JavascriptNotation.value)
+                        }, 3000)
+                        if (isAdded) {
+                            if (!SharedPrefUtils.getBooleanData(requireActivity(), "isFacebook")) {
+                                //                        guideDialog(false)
+                            }
                         }
                     }
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
 
@@ -319,21 +326,45 @@ class BrowserFragment(private val website: String) : BaseFragment() {
             .setPositiveText(getString(R.string.yes))
             .onPositive(object : MaterialDialog.SingleButtonCallback {
                 override fun onClick(dialog: MaterialDialog, which: DialogAction) {
-
+                    webview!!.post {
+                        if (InternetConnection().checkConnection(requireActivity())) {
+                            startDownload(finalUrl, "Facebook_$rnds", FB_FOLDER)
+                        } else {
+                            showToast(getString(R.string.no_internet))
+                        }
+                    }
                 }
             })
             .setNeutralText(getString(R.string.copy))
             .onNeutral(object : MaterialDialog.SingleButtonCallback {
                 override fun onClick(dialog: MaterialDialog, which: DialogAction) {
-
+                    requireActivity().runOnUiThread {
+                        copyUrlToClip(finalUrl)
+                    }
                 }
             })
             .setNegativeText(getString(R.string.watch))
             .onNegative(object : MaterialDialog.SingleButtonCallback {
                 override fun onClick(dialog: MaterialDialog, which: DialogAction) {
+                    if (InternetConnection().checkConnection(requireActivity())) {
+                        val intent = Intent(activity, FbVideoWatchActivity::class.java)
+                        intent.putExtra("videoUrl", finalurl)
+                        startActivity(intent)
+                    } else {
+                        showToast(getString(R.string.no_internet))
+                    }
                 }
             })
         val dialog = builder.build()
         dialog.show()
+    }
+
+    private fun copyUrlToClip(url: String) {
+        val clipboard = requireActivity()
+            .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip =
+            ClipData.newPlainText(webview!!.title, url)
+        clipboard.setPrimaryClip(clip)
+        showToast(getString(R.string.link_copied))
     }
 }
