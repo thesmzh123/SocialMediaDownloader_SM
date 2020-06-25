@@ -13,5 +13,6 @@ object Constants {
     const val QUERY = "?__a=1"
     const val ARG_POSITION = "position"
     const val FB_FOLDER="facebook"
+    const val TWITTER_FOLDER="twitter"
 
 }

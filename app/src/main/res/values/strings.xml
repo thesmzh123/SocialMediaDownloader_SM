@@ -39,5 +39,7 @@
     <string name="no_internet">No Internet Connection</string>
     <string name="download_video_in_background">Downloading video in the background.\nCheck the notification for progress</string>
     <string name="video_is_already_downloading">Video is already downloading in background</string>
+    <string name="no">No</string>
+    <string name="generate_download_link">Genearting Download Link..</string>
 
 </resources>

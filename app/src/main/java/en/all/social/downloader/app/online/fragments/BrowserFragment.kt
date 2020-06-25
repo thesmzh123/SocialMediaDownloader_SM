@@ -7,14 +7,14 @@ import android.content.*
 import android.graphics.Bitmap
 import android.net.http.SslCertificate
 import android.net.http.SslError
-import android.os.Bundle
-import android.os.Handler
-import android.os.StrictMode
+import android.os.*
 import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.webkit.*
 import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
@@ -26,12 +26,17 @@ import com.find.lost.app.phone.utils.SharedPrefUtils
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.github.javiersantos.materialstyleddialogs.enums.Style
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.htetznaing.lowcostvideo.LowCostVideo
+import com.htetznaing.lowcostvideo.Model.XModel
+import com.video.downloading.app.downloader.online.app.utils.PermissionsUtils
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.activities.FbVideoWatchActivity
 import en.all.social.downloader.app.online.utils.Constants
 import en.all.social.downloader.app.online.utils.Constants.FB_FOLDER
 import en.all.social.downloader.app.online.utils.Constants.TAGI
+import en.all.social.downloader.app.online.utils.Constants.TWITTER_FOLDER
 import en.all.social.downloader.app.online.utils.JavascriptNotation
+import en.all.social.downloader.app.online.utils.VideoContentSearch
 import kotlinx.android.synthetic.main.fragment_browser.view.*
 import javax.net.ssl.HttpsURLConnection
 import javax.net.ssl.SSLSocketFactory
@@ -46,6 +51,10 @@ class BrowserFragment(private val website: String) : BaseFragment() {
         return f
     }
 
+    private var anim: Animation? = null
+
+    private var twitterLink: String? = null
+    private var twitterLink1: String? = null
     private var defaultSSLSF: SSLSocketFactory? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,7 +101,6 @@ class BrowserFragment(private val website: String) : BaseFragment() {
             }
             website.equals(getString(R.string.twitter_website)) -> {
                 loadUrl(getString(R.string.twitter_website))
-                root!!.fab.visibility = View.VISIBLE
 
             }
             website.equals(getString(R.string.linkedin_website)) -> {
@@ -111,7 +119,94 @@ class BrowserFragment(private val website: String) : BaseFragment() {
 
             }
         }
+        anim = AlphaAnimation(0.0f, 1.0f)
+        (anim as AlphaAnimation).duration =
+            1000 //You can manage the blinking time with this parameter
+
+        (anim as AlphaAnimation).startOffset = 20
+        (anim as AlphaAnimation).repeatMode = Animation.REVERSE
+        (anim as AlphaAnimation).repeatCount = Animation.INFINITE
+
+        root!!.fab.setOnClickListener {
+            if (webview!!.url.contains(getString(R.string.twitter_website))) {
+                val split: Array<String> =
+                    twitterLink!!.split("\\?".toRegex()).toTypedArray()
+                showDialog(getString(R.string.generate_download_link))
+                xGetter!!.find(split[0])
+            }
+        }
+
+        xGetter = LowCostVideo(requireActivity())
+        xGetter!!.onFinish(object : LowCostVideo.OnTaskCompleted {
+            override fun onTaskCompleted(
+                vidURL: ArrayList<XModel>,
+                multiple_quality: Boolean
+            ) {
+                hideDialog()
+                if (multiple_quality) {
+                    twitterLink1 = vidURL[0].url
+                    downloadVideo()
+                }
+            }
+
+            override fun onError() {
+                //Error
+                hideDialog()
+            }
+        })
         return root
+    }
+
+    private fun downloadVideo() {
+        val builder =
+            MaterialStyledDialog.Builder(requireActivity())
+        builder.setTitle(getString(R.string.congrats))
+            .setDescription(getString(R.string.download_this_video))
+            .setStyle(Style.HEADER_WITH_ICON)
+            .setIcon(R.drawable.ic_baseline_arrow_downward_24)
+            .withDialogAnimation(true)
+            .setPositiveText(getString(R.string.yes))
+            .onPositive(object : MaterialDialog.SingleButtonCallback {
+                override fun onClick(dialog: MaterialDialog, which: DialogAction) {
+                    createDownloadStream()
+                }
+            })
+            .setNegativeText(getString(R.string.no))
+            .onNegative(object : MaterialDialog.SingleButtonCallback {
+                override fun onClick(dialog: MaterialDialog, which: DialogAction) {
+                    dialog.dismiss()
+                }
+            })
+        val dialog = builder.build()
+        dialog.show()
+    }
+
+    //TODO: createDownloadStream
+    private fun createDownloadStream() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            val permissionsUtils =
+                PermissionsUtils().getInstance(requireActivity())
+            if (permissionsUtils != null) {
+                if (permissionsUtils.isAllPermissionAvailable()) {
+                    when {
+                        webview!!.url.contains(getString(R.string.twitter_website)) -> {
+                            startDownload(twitterLink1, "Twitter_$rnds", TWITTER_FOLDER)
+                        }
+                    }
+                    Log.d(TAGI, "permission accepted")
+                } else {
+                    permissionsUtils.setActivity(requireActivity())
+                    permissionsUtils.requestPermissionsIfDenied()
+                }
+            }
+        } else {
+            when {
+                webview!!.url.contains(getString(R.string.twitter_website)) -> {
+                    startDownload(twitterLink1, "Twitter_$rnds", TWITTER_FOLDER)
+                }
+            }
+        }
+
     }
 
     @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
@@ -197,6 +292,61 @@ class BrowserFragment(private val website: String) : BaseFragment() {
                             webview!!.loadUrl(JavascriptNotation.valueResource)
                             webview!!.loadUrl(JavascriptNotation.getValue)
                         }, 3000)
+                    } else {
+                        object : VideoContentSearch(requireActivity(), url, page, title) {
+                            override fun onStartInspectingURL() {
+                                Handler(Looper.getMainLooper()).post {
+                                    Log.d(TAGI, "onStartInspectingURL")
+                                }
+                            }
+
+                            override fun onFinishedInspectingURL(finishedAll: Boolean) {
+                                HttpsURLConnection.setDefaultSSLSocketFactory(defaultSSLSF)
+                                if (finishedAll) {
+                                    Handler(Looper.getMainLooper()).post {
+                                        Log.d(TAGI, "onFinishedInspectingURL")
+                                    }
+                                }
+                            }
+
+                            override fun onVideoFound(
+                                size: String?,
+                                type: String?,
+                                link: String?,
+                                name: String?,
+                                page: String?,
+                                chunked: Boolean,
+                                website: String?
+                            ) {
+                                try {
+                                    requireActivity()
+                                        .runOnUiThread {
+
+                                            if (page != null) {
+                                                when {
+                                                    page.contains(getString(R.string.twitter_website)) -> {
+
+                                                        if (isAdded) {
+                                                            clipTweet()
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                    Log.d(
+                                        TAGI,
+                                        "onVideoFound: $size,$type,$link,$name,$page,$chunked,$website"
+                                    )
+
+
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+
+                            }
+
+                        }.start()
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -240,6 +390,39 @@ class BrowserFragment(private val website: String) : BaseFragment() {
             }
         }
 
+    }
+
+    //TODO: clip tweet
+    private fun clipTweet() {
+        val clipBoard =
+            requireActivity().getSystemService(
+                Context.CLIPBOARD_SERVICE
+            ) as ClipboardManager
+        clipBoard.addPrimaryClipChangedListener {
+            val clipData =
+                clipBoard.primaryClip
+            val item =
+                clipData!!.getItemAt(0)
+            val text =
+                item.text.toString()
+            Log.d(
+                TAGI,
+                "twitter: $text"
+            )
+            if (text.contains("https://twitter.com/"))
+                twitterLink = text
+            /*if (isAdded) {
+                requireActivity()
+                    .runOnUiThread {*/
+                        root!!.fab.visibility =
+                            View.VISIBLE
+                        root!!.fab.clearAnimation()
+                        root!!.fab.startAnimation(
+                            anim
+                        )
+//                    }
+//            }
+        }
     }
 
     @SuppressLint("DefaultLocale")

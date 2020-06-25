@@ -12,6 +12,7 @@ import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.utils.Constants.TAGI
 import en.all.social.downloader.app.online.utils.VideoControllerView
 
+@Suppress("DEPRECATION")
 class FbVideoWatchActivity : BaseActivity(), SurfaceHolder.Callback,
     MediaPlayer.OnPreparedListener, VideoControllerView.MediaPlayerControl {
     private var videoSurface: SurfaceView? = null

@@ -17,6 +17,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.htetznaing.lowcostvideo.LowCostVideo
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.activities.MainActivity
 import en.all.social.downloader.app.online.utils.Constants.DOWNLOAD_PATH
@@ -31,6 +32,7 @@ open class BaseFragment : Fragment() {
     var rnds: String? = null
     private val downloadedList = ArrayList<String>()
     private var dialog: AlertDialog? = null
+    var xGetter: LowCostVideo? = null
 
     var mainContext: MainActivity? = null
 
@@ -109,7 +111,7 @@ open class BaseFragment : Fragment() {
         try {
             val direct = File(
                 requireActivity().getExternalFilesDir(null),
-                "/SocialMediaDownloader/" + folderName
+                "/SocialMediaDownloader/$folderName"
             )
 
             if (!direct.exists()) {
@@ -147,7 +149,7 @@ open class BaseFragment : Fragment() {
     }
 
 
-    fun vIdeoList(): ArrayList<String> {
+    private fun vIdeoList(): ArrayList<String> {
         return downloadedList
     }
 
