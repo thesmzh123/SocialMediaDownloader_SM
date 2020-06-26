@@ -196,6 +196,7 @@ class BrowserFragment(private val website: String) : BaseFragment() {
             .setDescription(getString(R.string.video_resource))
             .setStyle(Style.HEADER_WITH_ICON)
             .setIcon(R.drawable.ic_baseline_videocam_off_24)
+            .setCancelable(false)
             .withDialogAnimation(true)
             .setPositiveText(getString(R.string.yes))
             .onPositive { dialog, which -> dialog.dismiss() }
@@ -316,13 +317,13 @@ class BrowserFragment(private val website: String) : BaseFragment() {
                 // cancelled due to SSL error
 
                 try {
-                  /*  if (view.url.contains(getString(R.string.twitter_website))) {
-                        if (isAdded) {
-                            if (!SharedPrefUtils.getBooleanData(requireActivity(), "isTwitter")) {
-                                //                        guideDialog(true)
-                            }
-                        }
-                    }*/
+                    /*  if (view.url.contains(getString(R.string.twitter_website))) {
+                          if (isAdded) {
+                              if (!SharedPrefUtils.getBooleanData(requireActivity(), "isTwitter")) {
+                                  //                        guideDialog(true)
+                              }
+                          }
+                      }*/
                     if (view.url.contains(getString(R.string.facebook_website))) {
                         root!!.fab.visibility = View.GONE
                         val handler = Handler()

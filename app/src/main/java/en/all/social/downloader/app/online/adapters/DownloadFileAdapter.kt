@@ -24,6 +24,8 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.find.lost.app.phone.utils.SharedPrefUtils
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
+import com.github.javiersantos.materialstyleddialogs.enums.Style
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -266,12 +268,16 @@ class DownloadFileAdapter(
     }
 
     private fun deleteFile(position: Int) {
-        val alertDialogBuilder =
-            MaterialAlertDialogBuilder(context)
-        alertDialogBuilder.setMessage(context.getString(R.string.delmsg)).setCancelable(true)
-            .setPositiveButton(
-                context.getString(R.string.yes)
-            ) { dialog: DialogInterface?, which: Int ->
+        val builder =
+            MaterialStyledDialog.Builder(context)
+        builder
+            .setDescription(context.getString(R.string.delmsg))
+            .setStyle(Style.HEADER_WITH_ICON)
+            .setIcon(R.drawable.ic_baseline_delete_24)
+            .withDialogAnimation(true)
+            .setPositiveText(context.getString(R.string.yes))
+            .setCancelable(false)
+            .onPositive { dialog, which ->
                 File(downloadFileList[position].filePath).delete()
                 Toast.makeText(
                     context,
@@ -282,12 +288,13 @@ class DownloadFileAdapter(
                 notifyItemChanged(position)
                 notifyItemRangeRemoved(0, downloadFileList.size)
                 downloadFragment.checkEmptyState()
-
-            }.setNegativeButton(
-                context.getString(R.string.no)
-            ) { dialog: DialogInterface, which: Int -> dialog.cancel() }
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
+            }
+            .setNegativeText(context.getString(R.string.no))
+            .onNegative { dialog, which ->
+                dialog.dismiss()
+            }
+        val dialog = builder.build()
+        dialog.show()
 
     }
 

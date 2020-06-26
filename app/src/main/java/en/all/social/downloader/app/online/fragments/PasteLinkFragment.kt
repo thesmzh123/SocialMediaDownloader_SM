@@ -282,6 +282,7 @@ open class PasteLinkFragment(private val website: String) : BaseFragment() {
             .setStyle(Style.HEADER_WITH_ICON)
             .setIcon(R.drawable.ic_baseline_arrow_downward_24)
             .withDialogAnimation(true)
+            .setCancelable(false)
             .setPositiveText(getString(R.string.yes))
             .onPositive { dialog, which ->
                 startDownload(url, name, folderName)
