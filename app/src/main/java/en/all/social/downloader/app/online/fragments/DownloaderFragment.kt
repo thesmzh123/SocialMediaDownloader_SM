@@ -67,8 +67,15 @@ class DownloaderFragment : BaseFragment() {
 
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(childFragmentManager, website.toString())
-        adapter.addFragment(BrowserFragment(website.toString()), getString(R.string.browse))
-        adapter.addFragment(PasteLinkFragment(website.toString()), getString(R.string.paste_link))
+        if (website.equals(getString(R.string.linkedin_website))) {
+            adapter.addFragment(BrowserFragment(website.toString()), getString(R.string.browse))
+        } else {
+            adapter.addFragment(BrowserFragment(website.toString()), getString(R.string.browse))
+            adapter.addFragment(
+                PasteLinkFragment(website.toString()),
+                getString(R.string.paste_link)
+            )
+        }
         viewPager.adapter = adapter
     }
 
