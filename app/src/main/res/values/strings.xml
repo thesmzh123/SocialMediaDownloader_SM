@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">All Social Media Downloader</string>
     <string name="download_videos_fvt">Download Videos from your favourite sites</string>
-    <string name="permission_message">You need to enable these permisiion to use the app,</string>
+    <string name="permission_message">You need to enable these  permission to use the app,</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -40,8 +40,13 @@
     <string name="download_video_in_background">Downloading video in the background.\nCheck the notification for progress</string>
     <string name="video_is_already_downloading">Video is already downloading in background</string>
     <string name="no">No</string>
-    <string name="generate_download_link">Genearting Download Link..</string>
+    <string name="generate_download_link">Generating Download Link..</string>
     <string name="no_video">No Video!</string>
     <string name="video_resource">Download button will start blinking and detect video after you play any video.</string>
-
+    <string name="fill_the_field">Please fill the field</string>
+    <string name="valid_url">Please enter a valid url</string>
+    <string name="enter_fb_url">Please enter facebook url to download video!</string>
+    <string name="enter_twitter_url">Please enter twitter url to download video!</string>
+    <string name="enter_instagram_url">Please enter instagram url to download video!</string>
+    <string name="enter_tiktok_url">Please enter tiktok url to download video!</string>
 </resources>
