@@ -56,9 +56,13 @@ class DownloaderFragment : BaseFragment() {
     }
 
     private fun changeToolbarColor(colorID: Int) {
-        root!!.appBarLayout.setBackgroundResource(colorID)
-        tabLayout!!.setBackgroundResource(colorID)
-        mainContext!!.changeToolbarColor(colorID)
+        try {
+            root!!.appBarLayout.setBackgroundResource(colorID)
+            tabLayout!!.setBackgroundResource(colorID)
+            mainContext!!.changeToolbarColor(colorID)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun setupViewPager(viewPager: ViewPager) {

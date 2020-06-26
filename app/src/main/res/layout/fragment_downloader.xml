@@ -30,10 +30,11 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            app:tabIndicatorColor="@android:color/white"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_5sdp"
-            app:tabTextColor="@android:color/white"
-            android:layout_height="wrap_content" />
+            app:tabIndicatorColor="@android:color/white"
+
+            app:tabTextColor="@android:color/white" />
 
         <!--        app:tabInlineLabel="true" for icon in left-->
     </com.google.android.material.appbar.AppBarLayout>

@@ -54,19 +54,23 @@ class MainActivity : BaseActivity() {
     }
 
     fun changeToolbarColor(resId: Int) {
-        //toolbar color
-        supportActionBar!!.setBackgroundDrawable(
-            ColorDrawable(
-                resources.getColor(
-                    resId
+        try {//toolbar color
+            supportActionBar!!.setBackgroundDrawable(
+                ColorDrawable(
+                    resources.getColor(
+                        resId
+                    )
                 )
             )
-        )
-        //status bar color
-        val window = window
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            supportActionBar!!.elevation = 0F
+            //status bar color
+            val window = window
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 
-        window.statusBarColor = ContextCompat.getColor(this@MainActivity, resId)
+            window.statusBarColor = ContextCompat.getColor(this@MainActivity, resId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

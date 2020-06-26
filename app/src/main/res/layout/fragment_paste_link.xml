@@ -61,13 +61,67 @@
                 android:textSize="@dimen/_14ssp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/downloadBtn"
+                android:id="@+id/fbBtn"
                 android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_45sdp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/download_"
                 android:textSize="@dimen/_12ssp"
+                android:visibility="gone"
+                app:backgroundTint="@color/fbColor"
+                app:icon="@drawable/downloads"
+                app:iconSize="@dimen/_14sdp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/linkedinBtn"
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/download_"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone"
+                app:backgroundTint="@color/linkedinColor"
+                app:icon="@drawable/downloads"
+                app:iconSize="@dimen/_14sdp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/instagramBtn"
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/download_"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone"
+                app:backgroundTint="@color/centerColorInsta"
+                app:icon="@drawable/downloads"
+                app:iconSize="@dimen/_14sdp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tiktokBtn"
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/download_"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone"
+                app:backgroundTint="@color/tiktokColor"
+                app:icon="@drawable/downloads"
+                app:iconSize="@dimen/_14sdp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/twitterBtn"
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/download_"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone"
+                app:backgroundTint="@color/twitterColor"
                 app:icon="@drawable/downloads"
                 app:iconSize="@dimen/_14sdp" />
         </LinearLayout>
