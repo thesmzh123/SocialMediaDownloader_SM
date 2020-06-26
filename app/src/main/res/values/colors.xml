@@ -16,4 +16,6 @@
     <color name="centerColorInsta">#FD1D1D</color>
     <color name="endColorInsta">#833AB4</color>
     <color name="startColorInsta">#F77737</color>
+    <color name="colorBtn">#909090</color>
+
 </resources>

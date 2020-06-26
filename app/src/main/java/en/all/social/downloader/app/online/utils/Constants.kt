@@ -17,5 +17,6 @@ object Constants {
     const val INSTAGRAM_FOLDER="instagram"
     const val LINKEDIN_FOLDER="linkedin"
     const val TIKTOK_FOLDER="tiktok"
+    const val DOWNLOAD_DIRECTORY = "SocialMediaDownloader"
 
 }

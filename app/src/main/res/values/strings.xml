@@ -49,4 +49,20 @@
     <string name="enter_twitter_url">Please enter twitter url to download video!</string>
     <string name="enter_instagram_url">Please enter instagram url to download video!</string>
     <string name="enter_tiktok_url">Please enter tiktok url to download video!</string>
+    <string name="delete">Delete</string>
+    <string name="download_location">Download Location</string>
+    <string name="share">Share</string>
+    <string name="delmsg">Are you sure you ant to delete this?</string>
+    <string name="file_deleted">File Deleted</string>
+    <string name="details">Details</string>
+    <string name="name">Name</string>
+    <string name="size">Size</string>
+    <string name="date_and_time">Date and Time</string>
+    <string name="path">Path</string>
+    <string name="no_file_s_downloaded_found">No File(s) Found!</string>
+    <string name="facebook">Facebook</string>
+    <string name="instagram">Instagram</string>
+    <string name="linkdein">Linkedin</string>
+    <string name="tiktok">TikTok</string>
+    <string name="twitter">Twitter</string>
 </resources>
