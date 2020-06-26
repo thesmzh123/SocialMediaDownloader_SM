@@ -1,4 +1,4 @@
-@file:Suppress("DEPRECATION")
+@file:Suppress("DEPRECATION", "UNUSED_ANONYMOUS_PARAMETER")
 
 package en.all.social.downloader.app.online.fragments
 
@@ -19,10 +19,7 @@ import android.webkit.*
 import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
-import com.afollestad.materialdialogs.DialogAction
-import com.afollestad.materialdialogs.MaterialDialog
 import com.find.lost.app.phone.utils.InternetConnection
-import com.find.lost.app.phone.utils.SharedPrefUtils
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.github.javiersantos.materialstyleddialogs.enums.Style
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -102,28 +99,28 @@ class BrowserFragment(private val website: String) : BaseFragment() {
         cookieManager.setAcceptCookie(true)
         CookieSyncManager.getInstance().startSync()
 
-        when {
-            website.equals(getString(R.string.facebook_website)) -> {
+        when (website) {
+            getString(R.string.facebook_website) -> {
                 loadUrl(getString(R.string.facebook_website))
                 root!!.fab.visibility = View.GONE
 
             }
-            website.equals(getString(R.string.twitter_website)) -> {
+            getString(R.string.twitter_website) -> {
                 loadUrl(getString(R.string.twitter_website))
                 root!!.fab.visibility = View.GONE
 
             }
-            website.equals(getString(R.string.linkedin_website)) -> {
+            getString(R.string.linkedin_website) -> {
                 loadUrl(getString(R.string.linkedin_website))
                 root!!.fab.visibility = View.VISIBLE
 
             }
-            website.equals(getString(R.string.instagram_website)) -> {
+            getString(R.string.instagram_website) -> {
                 loadUrl(getString(R.string.instagram_website))
                 root!!.fab.visibility = View.VISIBLE
 
             }
-            website.equals(getString(R.string.tiktok_website)) -> {
+            getString(R.string.tiktok_website) -> {
                 loadUrl(getString(R.string.tiktok_website))
                 root!!.fab.visibility = View.GONE
 
@@ -201,11 +198,7 @@ class BrowserFragment(private val website: String) : BaseFragment() {
             .setIcon(R.drawable.ic_baseline_videocam_off_24)
             .withDialogAnimation(true)
             .setPositiveText(getString(R.string.yes))
-            .onPositive(object : MaterialDialog.SingleButtonCallback {
-                override fun onClick(dialog: MaterialDialog, which: DialogAction) {
-                    dialog.dismiss()
-                }
-            })
+            .onPositive { dialog, which -> dialog.dismiss() }
 
         val dialog = builder.build()
         dialog.show()
@@ -220,17 +213,9 @@ class BrowserFragment(private val website: String) : BaseFragment() {
             .setIcon(R.drawable.ic_baseline_arrow_downward_24)
             .withDialogAnimation(true)
             .setPositiveText(getString(R.string.yes))
-            .onPositive(object : MaterialDialog.SingleButtonCallback {
-                override fun onClick(dialog: MaterialDialog, which: DialogAction) {
-                    createDownloadStream()
-                }
-            })
+            .onPositive { dialog, which -> createDownloadStream() }
             .setNegativeText(getString(R.string.no))
-            .onNegative(object : MaterialDialog.SingleButtonCallback {
-                override fun onClick(dialog: MaterialDialog, which: DialogAction) {
-                    dialog.dismiss()
-                }
-            })
+            .onNegative { dialog, which -> dialog.dismiss() }
         val dialog = builder.build()
         dialog.show()
     }
@@ -331,24 +316,24 @@ class BrowserFragment(private val website: String) : BaseFragment() {
                 // cancelled due to SSL error
 
                 try {
-                    if (view.url.contains(getString(R.string.twitter_website))) {
+                  /*  if (view.url.contains(getString(R.string.twitter_website))) {
                         if (isAdded) {
                             if (!SharedPrefUtils.getBooleanData(requireActivity(), "isTwitter")) {
                                 //                        guideDialog(true)
                             }
                         }
-                    }
+                    }*/
                     if (view.url.contains(getString(R.string.facebook_website))) {
                         root!!.fab.visibility = View.GONE
                         val handler = Handler()
                         handler.postDelayed({
                             webview!!.loadUrl(JavascriptNotation.value)
                         }, 3000)
-                        if (isAdded) {
+                        /*if (isAdded) {
                             if (!SharedPrefUtils.getBooleanData(requireActivity(), "isFacebook")) {
                                 //                        guideDialog(false)
                             }
-                        }
+                        }*/
                     }
 
                 } catch (e: Exception) {
@@ -600,37 +585,31 @@ class BrowserFragment(private val website: String) : BaseFragment() {
             .setIcon(R.drawable.ic_baseline_arrow_downward_24)
             .withDialogAnimation(true)
             .setPositiveText(getString(R.string.yes))
-            .onPositive(object : MaterialDialog.SingleButtonCallback {
-                override fun onClick(dialog: MaterialDialog, which: DialogAction) {
-                    webview!!.post {
-                        if (InternetConnection().checkConnection(requireActivity())) {
-                            startDownload(finalUrl, "Facebook_$rnds", FB_FOLDER)
-                        } else {
-                            showToast(getString(R.string.no_internet))
-                        }
-                    }
-                }
-            })
-            .setNeutralText(getString(R.string.copy))
-            .onNeutral(object : MaterialDialog.SingleButtonCallback {
-                override fun onClick(dialog: MaterialDialog, which: DialogAction) {
-                    requireActivity().runOnUiThread {
-                        copyUrlToClip(finalUrl)
-                    }
-                }
-            })
-            .setNegativeText(getString(R.string.watch))
-            .onNegative(object : MaterialDialog.SingleButtonCallback {
-                override fun onClick(dialog: MaterialDialog, which: DialogAction) {
+            .onPositive { dialog, which ->
+                webview!!.post {
                     if (InternetConnection().checkConnection(requireActivity())) {
-                        val intent = Intent(activity, FbVideoWatchActivity::class.java)
-                        intent.putExtra("videoUrl", finalurl)
-                        startActivity(intent)
+                        startDownload(finalUrl, "Facebook_$rnds", FB_FOLDER)
                     } else {
                         showToast(getString(R.string.no_internet))
                     }
                 }
-            })
+            }
+            .setNeutralText(getString(R.string.copy))
+            .onNeutral { dialog, which ->
+                requireActivity().runOnUiThread {
+                    copyUrlToClip(finalUrl)
+                }
+            }
+            .setNegativeText(getString(R.string.watch))
+            .onNegative { dialog, which ->
+                if (InternetConnection().checkConnection(requireActivity())) {
+                    val intent = Intent(activity, FbVideoWatchActivity::class.java)
+                    intent.putExtra("videoUrl", finalurl)
+                    startActivity(intent)
+                } else {
+                    showToast(getString(R.string.no_internet))
+                }
+            }
         val dialog = builder.build()
         dialog.show()
     }
