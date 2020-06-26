@@ -11,11 +11,7 @@
         android:name="en.all.social.downloader.app.online.fragments.HomeFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/nav_whtsapp"
-        android:name="en.all.social.downloader.app.online.fragments.WhatsappStatusFragment"
-        android:label="@string/whatsapp_status_saver"
-        tools:layout="@layout/fragment_whatsapp_status" />
+
     <fragment
         android:id="@+id/nav_facebook"
         android:name="en.all.social.downloader.app.online.fragments.DownloaderFragment"

@@ -31,12 +31,14 @@ import com.htetznaing.lowcostvideo.Model.XModel
 import com.video.downloading.app.downloader.online.app.utils.PermissionsUtils
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.activities.FbVideoWatchActivity
-import en.all.social.downloader.app.online.utils.Constants
+import en.all.social.downloader.app.online.models.VideoDownload
+import en.all.social.downloader.app.online.utils.*
 import en.all.social.downloader.app.online.utils.Constants.FB_FOLDER
+import en.all.social.downloader.app.online.utils.Constants.INSTAGRAM_FOLDER
+import en.all.social.downloader.app.online.utils.Constants.LINKEDIN_FOLDER
 import en.all.social.downloader.app.online.utils.Constants.TAGI
+import en.all.social.downloader.app.online.utils.Constants.TIKTOK_FOLDER
 import en.all.social.downloader.app.online.utils.Constants.TWITTER_FOLDER
-import en.all.social.downloader.app.online.utils.JavascriptNotation
-import en.all.social.downloader.app.online.utils.VideoContentSearch
 import kotlinx.android.synthetic.main.fragment_browser.view.*
 import javax.net.ssl.HttpsURLConnection
 import javax.net.ssl.SSLSocketFactory
@@ -52,9 +54,12 @@ class BrowserFragment(private val website: String) : BaseFragment() {
     }
 
     private var anim: Animation? = null
+    private var videoDownloadList: ArrayList<VideoDownload>? = null
 
     private var twitterLink: String? = null
     private var twitterLink1: String? = null
+    private var tiktokLink: String? = null
+    private var tiktokLink1: String? = null
     private var defaultSSLSF: SSLSocketFactory? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +94,8 @@ class BrowserFragment(private val website: String) : BaseFragment() {
         root = inflater.inflate(R.layout.fragment_browser, container, false)
         defaultSSLSF = HttpsURLConnection.getDefaultSSLSocketFactory()
         webview = root!!.webView
+        videoDownloadList = ArrayList()
+
         createWebView()
         CookieSyncManager.createInstance(requireActivity())
         val cookieManager = CookieManager.getInstance()
@@ -98,9 +105,12 @@ class BrowserFragment(private val website: String) : BaseFragment() {
         when {
             website.equals(getString(R.string.facebook_website)) -> {
                 loadUrl(getString(R.string.facebook_website))
+                root!!.fab.visibility = View.GONE
+
             }
             website.equals(getString(R.string.twitter_website)) -> {
                 loadUrl(getString(R.string.twitter_website))
+                root!!.fab.visibility = View.GONE
 
             }
             website.equals(getString(R.string.linkedin_website)) -> {
@@ -115,7 +125,7 @@ class BrowserFragment(private val website: String) : BaseFragment() {
             }
             website.equals(getString(R.string.tiktok_website)) -> {
                 loadUrl(getString(R.string.tiktok_website))
-                root!!.fab.visibility = View.VISIBLE
+                root!!.fab.visibility = View.GONE
 
             }
         }
@@ -128,11 +138,36 @@ class BrowserFragment(private val website: String) : BaseFragment() {
         (anim as AlphaAnimation).repeatCount = Animation.INFINITE
 
         root!!.fab.setOnClickListener {
-            if (webview!!.url.contains(getString(R.string.twitter_website))) {
-                val split: Array<String> =
-                    twitterLink!!.split("\\?".toRegex()).toTypedArray()
-                showDialog(getString(R.string.generate_download_link))
-                xGetter!!.find(split[0])
+            when {
+                videoDownloadList.isNullOrEmpty() -> {
+                    root!!.fab.clearAnimation()
+                    noResourceDialog()
+                }
+                webview!!.url.contains(getString(R.string.twitter_website)) -> {
+                    val split: Array<String> =
+                        twitterLink!!.split("\\?".toRegex()).toTypedArray()
+                    showDialog(getString(R.string.generate_download_link))
+                    xGetter!!.find(split[0])
+                }
+                webview!!.url.contains(getString(R.string.instagram_website)) -> {
+                    downloadVideo()
+                }
+                webview!!.url.contains(getString(R.string.linkedin_website)) -> {
+                    downloadVideo()
+                }
+                webview!!.url.contains(getString(R.string.tiktok_website)) -> {
+
+                    val tikTokDownloader =
+                        TikTokDownloader(tiktokLink.toString(), requireActivity())
+                    tikTokDownloader.execute()
+                    tikTokDownloader.setOnTikTokListener(object : TikTokLinkListener {
+                        override fun onResponseReceive(data: String?) {
+                            tiktokLink1 = data
+                            downloadVideo()
+
+                        }
+                    })
+                }
             }
         }
 
@@ -155,6 +190,25 @@ class BrowserFragment(private val website: String) : BaseFragment() {
             }
         })
         return root
+    }
+
+    private fun noResourceDialog() {
+        val builder =
+            MaterialStyledDialog.Builder(requireActivity())
+        builder.setTitle(getString(R.string.no_video))
+            .setDescription(getString(R.string.video_resource))
+            .setStyle(Style.HEADER_WITH_ICON)
+            .setIcon(R.drawable.ic_baseline_videocam_off_24)
+            .withDialogAnimation(true)
+            .setPositiveText(getString(R.string.yes))
+            .onPositive(object : MaterialDialog.SingleButtonCallback {
+                override fun onClick(dialog: MaterialDialog, which: DialogAction) {
+                    dialog.dismiss()
+                }
+            })
+
+        val dialog = builder.build()
+        dialog.show()
     }
 
     private fun downloadVideo() {
@@ -183,6 +237,10 @@ class BrowserFragment(private val website: String) : BaseFragment() {
 
     //TODO: createDownloadStream
     private fun createDownloadStream() {
+        var linked = ""
+        for (video in videoDownloadList!!) {
+            linked = video.link
+        }
         if (Build.VERSION.SDK_INT >= 23) {
             val permissionsUtils =
                 PermissionsUtils().getInstance(requireActivity())
@@ -191,6 +249,15 @@ class BrowserFragment(private val website: String) : BaseFragment() {
                     when {
                         webview!!.url.contains(getString(R.string.twitter_website)) -> {
                             startDownload(twitterLink1, "Twitter_$rnds", TWITTER_FOLDER)
+                        }
+                        webview!!.url.contains(getString(R.string.instagram_website)) -> {
+                            startDownload(linked, "Instagram_$rnds", INSTAGRAM_FOLDER)
+                        }
+                        webview!!.url.contains(getString(R.string.linkedin_website)) -> {
+                            startDownload(linked, "Linkedin_$rnds", LINKEDIN_FOLDER)
+                        }
+                        webview!!.url.contains(getString(R.string.tiktok_website)) -> {
+                            startDownload(tiktokLink1, "TIKTOK_$rnds", TIKTOK_FOLDER)
                         }
                     }
                     Log.d(TAGI, "permission accepted")
@@ -203,6 +270,15 @@ class BrowserFragment(private val website: String) : BaseFragment() {
             when {
                 webview!!.url.contains(getString(R.string.twitter_website)) -> {
                     startDownload(twitterLink1, "Twitter_$rnds", TWITTER_FOLDER)
+                }
+                webview!!.url.contains(getString(R.string.instagram_website)) -> {
+                    startDownload(linked, "Instagram_$rnds", INSTAGRAM_FOLDER)
+                }
+                webview!!.url.contains(getString(R.string.linkedin_website)) -> {
+                    startDownload(linked, "Linkedin_$rnds", LINKEDIN_FOLDER)
+                }
+                webview!!.url.contains(getString(R.string.tiktok_website)) -> {
+                    startDownload(tiktokLink1, "TikTok_$rnds", TIKTOK_FOLDER)
                 }
             }
         }
@@ -274,6 +350,7 @@ class BrowserFragment(private val website: String) : BaseFragment() {
                             }
                         }
                     }
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -330,13 +407,34 @@ class BrowserFragment(private val website: String) : BaseFragment() {
                                                             clipTweet()
                                                         }
                                                     }
+                                                    page.contains(getString(R.string.tiktok_website)) -> {
 
+                                                        if (isAdded) {
+                                                            clipTweet()
+                                                        }
+                                                    }
+                                                    else -> {
+                                                        root!!.fab.clearAnimation()
+                                                        root!!.fab.startAnimation(anim)
+                                                    }
                                                 }
                                             }
                                         }
+                                    videoDownloadList!!.clear()
                                     Log.d(
                                         TAGI,
                                         "onVideoFound: $size,$type,$link,$name,$page,$chunked,$website"
+                                    )
+                                    videoDownloadList!!.add(
+                                        VideoDownload(
+                                            size.toString(),
+                                            type.toString(),
+                                            link.toString(),
+                                            name.toString(),
+                                            page.toString(),
+                                            chunked,
+                                            website.toString()
+                                        )
                                     )
 
 
@@ -399,30 +497,25 @@ class BrowserFragment(private val website: String) : BaseFragment() {
                 Context.CLIPBOARD_SERVICE
             ) as ClipboardManager
         clipBoard.addPrimaryClipChangedListener {
-            val clipData =
-                clipBoard.primaryClip
-            val item =
-                clipData!!.getItemAt(0)
-            val text =
-                item.text.toString()
-            Log.d(
-                TAGI,
-                "twitter: $text"
-            )
-            if (text.contains("https://twitter.com/"))
+            val clipData = clipBoard.primaryClip
+            val item = clipData!!.getItemAt(0)
+            val text = item.text.toString()
+            Log.d(TAGI, "twitter: $text")
+            if (text.contains("https://twitter.com/")) {
                 twitterLink = text
-            /*if (isAdded) {
-                requireActivity()
-                    .runOnUiThread {*/
-                        root!!.fab.visibility =
-                            View.VISIBLE
-                        root!!.fab.clearAnimation()
-                        root!!.fab.startAnimation(
-                            anim
-                        )
-//                    }
-//            }
+                fabAnim()
+            } else if (text.contains("tiktok.com/")) {
+                tiktokLink = text
+                fabAnim()
+            }
         }
+    }
+
+    private fun fabAnim() {
+        root!!.fab.visibility =
+            View.VISIBLE
+        root!!.fab.clearAnimation()
+        root!!.fab.startAnimation(anim)
     }
 
     @SuppressLint("DefaultLocale")

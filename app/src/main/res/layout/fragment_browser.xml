@@ -32,7 +32,6 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_60sdp"
-        android:visibility="invisible"
         app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal"
         app:srcCompat="@drawable/downloads"

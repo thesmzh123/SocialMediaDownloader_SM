@@ -14,5 +14,8 @@ object Constants {
     const val ARG_POSITION = "position"
     const val FB_FOLDER="facebook"
     const val TWITTER_FOLDER="twitter"
+    const val INSTAGRAM_FOLDER="instagram"
+    const val LINKEDIN_FOLDER="linkedin"
+    const val TIKTOK_FOLDER="tiktok"
 
 }

@@ -38,11 +38,15 @@ open class BaseFragment : Fragment() {
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mainContext = (requireActivity() as MainActivity)
-        val sdf = SimpleDateFormat("dd_M_yyyy hh_mm_ss")
-        val currentDate = sdf.format(Date())
-        rnds = "Dated_$currentDate"
+        try {
+            super.onCreate(savedInstanceState)
+            mainContext = (requireActivity() as MainActivity)
+            val sdf = SimpleDateFormat("dd_M_yyyy hh_mm_ss")
+            val currentDate = sdf.format(Date())
+            rnds = "Dated_$currentDate"
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     //TODO:  navigate to new fragment

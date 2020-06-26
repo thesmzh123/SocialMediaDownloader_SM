@@ -41,5 +41,7 @@
     <string name="video_is_already_downloading">Video is already downloading in background</string>
     <string name="no">No</string>
     <string name="generate_download_link">Genearting Download Link..</string>
+    <string name="no_video">No Video!</string>
+    <string name="video_resource">Download button will start blinking and detect video after you play any video.</string>
 
 </resources>
