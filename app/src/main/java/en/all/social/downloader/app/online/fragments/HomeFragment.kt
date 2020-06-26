@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.Nullable
+import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import en.all.social.downloader.app.online.R
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
@@ -25,6 +27,20 @@ class HomeFragment : BaseFragment() {
             navigateFragment(R.id.nav_facebook, getString(R.string.facebook_website))
         }
         root!!.whtsapp.setOnClickListener {
+            val pictureDialog: AlertDialog.Builder = MaterialAlertDialogBuilder(requireActivity())
+            pictureDialog.setTitle("Select Action")
+            val pictureDialogItems = arrayOf(
+                getString(R.string.whtsapp_status),
+                getString(R.string.whtsapp_buisness_status)
+            )
+            pictureDialog.setItems(pictureDialogItems,
+                { dialog, which ->
+                    when (which) {
+                        0 -> navigateFragment(R.id.nav_whtsapp, "")
+                        1 -> navigateFragment(R.id.nav_whtsapp_buisness, "")
+                    }
+                })
+            pictureDialog.show()
         }
         root!!.twitter.setOnClickListener {
             navigateFragment(R.id.nav_twittetr, getString(R.string.twitter_website))

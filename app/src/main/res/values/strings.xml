@@ -65,4 +65,9 @@
     <string name="linkdein">Linkedin</string>
     <string name="tiktok">TikTok</string>
     <string name="twitter">Twitter</string>
+    <string name="statuses">Statuses</string>
+    <string name="buisness_statuses">Buisness Statuses</string>
+    <string name="exit">Exit</string>
+    <string name="whtsapp_status">WhatsApp Status</string>
+    <string name="whtsapp_buisness_status">WhatsApp Buisness Status</string>
 </resources>
