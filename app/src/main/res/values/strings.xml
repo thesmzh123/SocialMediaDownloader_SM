@@ -1,11 +1,9 @@
 <resources>
     <string name="app_name">All Social Media Downloader</string>
-    <string name="download_videos_fvt">Download Videos from your favourite sites</string>
     <string name="permission_message">You need to enable these  permission to use the app,</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
     <string name="whatsapp_status_saver">WhatsApp Status Saver</string>
     <string name="facebook_video_downloader">Facebook Video Downloader</string>
@@ -65,9 +63,6 @@
     <string name="linkdein">Linkedin</string>
     <string name="tiktok">TikTok</string>
     <string name="twitter">Twitter</string>
-    <string name="statuses">Statuses</string>
-    <string name="buisness_statuses">Business Statuses</string>
-    <string name="exit">Exit</string>
     <string name="whtsapp_status">WhatsApp Status</string>
     <string name="whtsapp_buisness_status">WhatsApp Business Status</string>
     <string name="photos">Photos</string>
