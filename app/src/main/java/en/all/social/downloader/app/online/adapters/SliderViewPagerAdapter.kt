@@ -1,12 +1,14 @@
 package en.all.social.downloader.app.online.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import en.all.social.downloader.app.online.R
+import en.all.social.downloader.app.online.activities.OtherVideosPlayer
 import en.all.social.downloader.app.online.models.DownloadFile
 import kotlinx.android.synthetic.main.slider_vew_pager_layout.view.*
 import java.util.*
@@ -38,6 +40,11 @@ class SliderViewPagerAdapter(
             Glide.with(context).load(image.filePath)
                 .thumbnail(0.5f)
                 .into(view.image_preview)
+        }
+        view.RelativeLayoutVido.setOnClickListener {
+            val intent = Intent(context, OtherVideosPlayer::class.java)
+            intent.putExtra("videoUrl", image.filePath)
+            context.startActivity(intent)
         }
         container.addView(view)
         return view
