@@ -18,8 +18,8 @@ import kotlinx.android.synthetic.main.fragment_downloader.view.*
 
 @Suppress("DEPRECATION")
 class DownloaderFragment : BaseFragment() {
-    private var tabLayout: TabLayout? = null
-    private var website: String? = null
+    var tabLayout: TabLayout? = null
+    var website: String? = null
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(

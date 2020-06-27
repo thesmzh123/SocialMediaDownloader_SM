@@ -210,4 +210,5 @@ open class BaseFragment : Fragment() {
             e.printStackTrace()
         }
     }
+
 }

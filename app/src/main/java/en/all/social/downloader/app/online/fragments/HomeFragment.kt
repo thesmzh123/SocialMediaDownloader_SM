@@ -36,8 +36,8 @@ class HomeFragment : BaseFragment() {
             pictureDialog.setItems(pictureDialogItems,
                 { dialog, which ->
                     when (which) {
-                        0 -> navigateFragment(R.id.nav_whtsapp, "")
-                        1 -> navigateFragment(R.id.nav_whtsapp_buisness, "")
+                        0 -> navigateFragment(R.id.nav_whtsapp, "statuses")
+                        1 -> navigateFragment(R.id.nav_whtsapp_buisness, "buisnessstatues")
                     }
                 })
             pictureDialog.show()
