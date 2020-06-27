@@ -3,9 +3,11 @@
 package en.all.social.downloader.app.online.fragments
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.os.Build.VERSION
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +36,7 @@ class StatusSliderFragment : DialogFragment() {
 
     var root: View? = null
     private var imageUrl = ""
+    private var status = ""
 
     //	page change listener
     private val viewPagerPageChangeListener: OnPageChangeListener = object : OnPageChangeListener {
@@ -56,6 +59,7 @@ class StatusSliderFragment : DialogFragment() {
         root = inflater.inflate(R.layout.fragment_slider_status, container, false)
         downloadFileList = requireArguments().getSerializable("images") as ArrayList<DownloadFile>
         selectedPosition = requireArguments().getInt("position")
+        status = requireArguments().getString("status").toString()
         val myViewPagerAdapter = SliderViewPagerAdapter(requireActivity(), downloadFileList!!)
         root!!.viewpager.adapter = myViewPagerAdapter
         root!!.viewpager.addOnPageChangeListener(viewPagerPageChangeListener)
@@ -68,7 +72,39 @@ class StatusSliderFragment : DialogFragment() {
         root!!.share.setOnClickListener {
             shareStatus()
         }
+        root!!.repost.setOnClickListener {
+            rePostStatus()
+        }
         return root
+    }
+
+    private fun rePostStatus() {
+        val uri: Uri
+        val intent = Intent("android.intent.action.SEND")
+        val fileWithinMyDir = File(imageUrl)
+        if (fileWithinMyDir.exists()) {
+            uri = if (VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                FileProvider.getUriForFile(
+                    requireActivity(), requireActivity().packageName +
+                            ".provider", fileWithinMyDir
+                )
+            } else {
+                Uri.parse("file://$imageUrl")
+            }
+            try {
+                intent.type = "*/*"
+                if (status == "statuses") {
+                    intent.setPackage("com.whatsapp")
+                } else if (status == "buisnessstatues") {
+                    intent.setPackage("com.whatsapp.w4b")
+                }
+                intent.putExtra("android.intent.extra.STREAM", uri)
+                startActivity(intent)
+
+            } catch (unused: ActivityNotFoundException) {
+                showToast("WhatsApp Not Found on this Phone :(")
+            }
+        }
     }
 
     private fun shareStatus() {
@@ -76,7 +112,7 @@ class StatusSliderFragment : DialogFragment() {
         val fileWithinMyDir = File(imageUrl)
         val uri: Uri
         if (fileWithinMyDir.exists()) {
-            uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = if (VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 FileProvider.getUriForFile(
                     requireActivity(), requireActivity().packageName +
                             ".provider", fileWithinMyDir
@@ -125,11 +161,8 @@ class StatusSliderFragment : DialogFragment() {
                     // write the output file
                     out.flush()
                     out.close()
-                    Toast.makeText(
-                        requireActivity(),
-                        " Downloaded at: " + DOWNLOAD_PATH + File.separator + WHTSAPP_FOLDER + File.separator + inputFile.name,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToast(" Downloaded at: " + DOWNLOAD_PATH + File.separator + WHTSAPP_FOLDER + File.separator + inputFile.name)
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -160,5 +193,9 @@ class StatusSliderFragment : DialogFragment() {
             STYLE_NORMAL,
             android.R.style.Theme_Black_NoTitleBar_Fullscreen
         )
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
     }
 }

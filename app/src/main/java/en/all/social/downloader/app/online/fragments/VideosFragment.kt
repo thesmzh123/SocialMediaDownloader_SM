@@ -28,6 +28,7 @@ class VideosFragment(private val website: String) : BaseFragment() {
         f.arguments = b
         return f
     }
+
     private var directory: File? = null
 
     override fun onCreateView(
@@ -58,6 +59,7 @@ class VideosFragment(private val website: String) : BaseFragment() {
                         val bundle = Bundle()
                         bundle.putSerializable("images", downloadFileList)
                         bundle.putInt("position", position)
+                        bundle.putString("status", website)
 
                         val ft =
                             requireActivity().getSupportFragmentManager().beginTransaction()
@@ -87,6 +89,7 @@ class VideosFragment(private val website: String) : BaseFragment() {
         }
 
     }
+
     private fun init(statusPath: String) {
         try {
             downloadFileList!!.clear()
@@ -100,7 +103,7 @@ class VideosFragment(private val website: String) : BaseFragment() {
                     downloadFileList!!.add(DownloadFile(recordingUri, fileName))
                 }
             }
-            val fileModelAdapter = StatusViewAdapter(requireActivity(),downloadFileList!!)
+            val fileModelAdapter = StatusViewAdapter(requireActivity(), downloadFileList!!)
             root!!.recyclerView.layoutManager = GridLayoutManager(requireActivity(), 3)
             root!!.recyclerView.itemAnimator = DefaultItemAnimator()
             root!!.recyclerView.adapter = fileModelAdapter

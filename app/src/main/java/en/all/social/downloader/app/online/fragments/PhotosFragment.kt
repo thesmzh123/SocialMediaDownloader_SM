@@ -64,6 +64,7 @@ class PhotosFragment(private val website: String) : BaseFragment() {
                         val bundle = Bundle()
                         bundle.putSerializable("images", downloadFileList)
                         bundle.putInt("position", position)
+                        bundle.putString("status",website)
 
                         val ft =
                             requireActivity().getSupportFragmentManager().beginTransaction()
