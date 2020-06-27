@@ -75,4 +75,5 @@
     <string name="no_photo_status">No Photo(s) Status Found!</string>
     <string name="no_video_status">No Video(s) Status Found!</string>
     <string name="repost">Repost</string>
+    <string name="download_this_status">Do you want to download this status?</string>
 </resources>

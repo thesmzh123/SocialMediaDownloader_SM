@@ -3,16 +3,27 @@
 package en.all.social.downloader.app.online.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
+import com.github.javiersantos.materialstyleddialogs.enums.Style
+import com.google.android.material.snackbar.Snackbar
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.adapters.SliderViewPagerAdapter
 import en.all.social.downloader.app.online.models.DownloadFile
+import en.all.social.downloader.app.online.utils.Constants.DOWNLOAD_PATH
+import en.all.social.downloader.app.online.utils.Constants.WHTSAPP_FOLDER
 import kotlinx.android.synthetic.main.fragment_slider_status.view.*
+import java.io.*
 import java.util.*
 
 class StatusSliderFragment : DialogFragment() {
@@ -51,8 +62,62 @@ class StatusSliderFragment : DialogFragment() {
         root!!.viewpager.addOnPageChangeListener(viewPagerPageChangeListener)
         setCurrentItem(selectedPosition)
 
+
+        root!!.download.setOnClickListener {
+            downloadStatus()
+        }
         return root
     }
+
+    private fun downloadStatus() {
+        val builder =
+            MaterialStyledDialog.Builder(requireActivity())
+        builder.setTitle(getString(R.string.congrats))
+            .setDescription(getString(R.string.download_this_status))
+            .setStyle(Style.HEADER_WITH_ICON)
+            .setIcon(R.drawable.ic_baseline_arrow_downward_24)
+            .withDialogAnimation(true)
+            .setPositiveText(getString(R.string.yes))
+            .onPositive { dialog, which ->
+                val inputFile = File(imageUrl)
+
+                val `in`: InputStream
+                val out: OutputStream
+                try {
+
+                    //create output directory if it doesn't exist
+                    val dir = File(DOWNLOAD_PATH + File.separator + WHTSAPP_FOLDER + File.separator)
+                    if (!dir.exists()) {
+                        dir.mkdirs()
+                    }
+                    `in` = FileInputStream(inputFile.path)
+                    out =
+                        FileOutputStream(DOWNLOAD_PATH + File.separator + WHTSAPP_FOLDER + File.separator + inputFile.name)
+                    val buffer = ByteArray(1024)
+                    var read: Int
+                    while (`in`.read(buffer).also { read = it } != -1) {
+                        out.write(buffer, 0, read)
+                    }
+                    `in`.close()
+
+                    // write the output file
+                    out.flush()
+                    out.close()
+                    Toast.makeText(
+                        requireActivity(),
+                        " Downloaded at: " + DOWNLOAD_PATH + File.separator + WHTSAPP_FOLDER + File.separator + inputFile.name,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            .setNegativeText(getString(R.string.no))
+            .onNegative { dialog, which -> dialog.dismiss() }
+        val dialog = builder.build()
+        dialog.show()
+    }
+
 
     private fun setCurrentItem(position: Int) {
         root!!.viewpager.setCurrentItem(position, false)
@@ -66,6 +131,7 @@ class StatusSliderFragment : DialogFragment() {
         root!!.title.text = image.fileName
         imageUrl = image.filePath
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(

@@ -17,6 +17,7 @@ object Constants {
     const val INSTAGRAM_FOLDER = "instagram"
     const val LINKEDIN_FOLDER = "linkedin"
     const val TIKTOK_FOLDER = "tiktok"
+    const val WHTSAPP_FOLDER = "whatsapp"
     const val DOWNLOAD_DIRECTORY = "SocialMediaDownloader"
     val STATUS_PATH =
         Environment.getExternalStorageDirectory().absolutePath + "/WhatsApp/Media/.Statuses"
