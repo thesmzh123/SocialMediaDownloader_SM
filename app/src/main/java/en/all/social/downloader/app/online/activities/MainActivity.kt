@@ -1,6 +1,8 @@
 package en.all.social.downloader.app.online.activities
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -8,6 +10,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.video.downloading.app.downloader.online.app.utils.PermissionsUtils
 import en.all.social.downloader.app.online.R
 
 
@@ -21,7 +24,15 @@ class MainActivity : BaseActivity() {
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
             )
             setContentView(R.layout.activity_main)
-
+            if (Build.VERSION.SDK_INT >= 23) {
+                val permissionsUtils = PermissionsUtils().getInstance(this)
+                if (permissionsUtils?.isAllPermissionAvailable()!!) {
+                    Log.d("Test", "Permission")
+                } else {
+                    permissionsUtils.setActivity(this)
+                    permissionsUtils.requestPermissionsIfDenied()
+                }
+            }
 
             val navView: BottomNavigationView = findViewById(R.id.nav_view)
 

@@ -72,4 +72,6 @@
     <string name="whtsapp_buisness_status">WhatsApp Business Status</string>
     <string name="photos">Photos</string>
     <string name="videos">Videos</string>
+    <string name="no_photo_status">No Photo(s) Status Found!</string>
+    <string name="no_video_status">No Video(s) Status Found!</string>
 </resources>

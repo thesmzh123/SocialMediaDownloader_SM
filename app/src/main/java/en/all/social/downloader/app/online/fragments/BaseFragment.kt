@@ -24,6 +24,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.htetznaing.lowcostvideo.LowCostVideo
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.activities.MainActivity
+import en.all.social.downloader.app.online.models.DownloadFile
 import en.all.social.downloader.app.online.utils.Constants.DOWNLOAD_PATH
 import kotlinx.android.synthetic.main.layout_loading_dialog.view.*
 import java.io.File
@@ -37,6 +38,7 @@ open class BaseFragment : Fragment() {
     private val downloadedList = ArrayList<String>()
     private var dialog: AlertDialog? = null
     var xGetter: LowCostVideo? = null
+    var downloadFileList: ArrayList<DownloadFile>? = null
 
     private var mainContext: MainActivity? = null
 

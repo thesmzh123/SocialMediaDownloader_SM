@@ -26,7 +26,6 @@ import java.io.File
 
 class DownloadFragment : BaseFragment() {
     private var root1: File? = null
-    private var downloadFileList: ArrayList<DownloadFile>? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
