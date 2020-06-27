@@ -74,4 +74,5 @@
     <string name="videos">Videos</string>
     <string name="no_photo_status">No Photo(s) Status Found!</string>
     <string name="no_video_status">No Video(s) Status Found!</string>
+    <string name="repost">Repost</string>
 </resources>
