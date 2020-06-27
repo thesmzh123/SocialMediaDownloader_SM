@@ -33,7 +33,7 @@ class DownloadFragment : BaseFragment() {
     ): View? {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_download, container, false)
-        mainContext!!.changeToolbarColor(R.color.colorPrimary)
+        changeToolbarColor(R.color.colorPrimary)
         downloadFileList = ArrayList()
         root1 = if (Build.VERSION.SDK_INT >= 29) {
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)

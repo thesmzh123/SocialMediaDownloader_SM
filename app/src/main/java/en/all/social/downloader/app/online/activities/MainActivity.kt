@@ -1,9 +1,7 @@
 package en.all.social.downloader.app.online.activities
 
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.WindowManager
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -53,24 +51,4 @@ class MainActivity : BaseActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    fun changeToolbarColor(resId: Int) {
-        try {//toolbar color
-            supportActionBar!!.setBackgroundDrawable(
-                ColorDrawable(
-                    resources.getColor(
-                        resId
-                    )
-                )
-            )
-            supportActionBar!!.elevation = 0F
-            //status bar color
-            val window = window
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-
-            window.statusBarColor = ContextCompat.getColor(this@MainActivity, resId)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 }

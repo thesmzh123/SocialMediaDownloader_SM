@@ -22,7 +22,7 @@ class HomeFragment : BaseFragment() {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_home, container, false)
 
-        mainContext!!.changeToolbarColor(R.color.colorPrimary)
+        changeToolbarColor(R.color.colorPrimary)
         root!!.fb.setOnClickListener {
             navigateFragment(R.id.nav_facebook, getString(R.string.facebook_website))
         }

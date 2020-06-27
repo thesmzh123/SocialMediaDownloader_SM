@@ -5,14 +5,18 @@ package en.all.social.downloader.app.online.fragments
 import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
+import android.view.WindowManager
 import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -34,7 +38,7 @@ open class BaseFragment : Fragment() {
     private var dialog: AlertDialog? = null
     var xGetter: LowCostVideo? = null
 
-    var mainContext: MainActivity? = null
+    private var mainContext: MainActivity? = null
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -186,5 +190,24 @@ open class BaseFragment : Fragment() {
         return builder.create()
     }
 
+    fun changeToolbarColor(resId: Int) {
+        try {//toolbar color
+            (activity as AppCompatActivity?)!!.supportActionBar!!.setBackgroundDrawable(
+                ColorDrawable(
+                    resources.getColor(
+                        resId
+                    )
+                )
+            )
+            (activity as AppCompatActivity?)!!.supportActionBar!!.elevation = 0F
+            //status bar color
+            val window = requireActivity().window
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 
+            window.statusBarColor = ContextCompat.getColor(requireActivity(), resId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }
