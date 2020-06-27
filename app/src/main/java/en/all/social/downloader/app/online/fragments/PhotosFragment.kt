@@ -11,13 +11,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.adapters.StatusViewAdapter
 import en.all.social.downloader.app.online.models.DownloadFile
+import en.all.social.downloader.app.online.utils.ClickListener
 import en.all.social.downloader.app.online.utils.Constants
 import en.all.social.downloader.app.online.utils.Constants.BUISNESS_STATUS_PATH
 import en.all.social.downloader.app.online.utils.Constants.STATUS_PATH
 import en.all.social.downloader.app.online.utils.Constants.TAGI
 import en.all.social.downloader.app.online.utils.FileCheckerHelper.isImageFile
+import en.all.social.downloader.app.online.utils.RecyclerTouchListener
 import kotlinx.android.synthetic.main.fragment_photo_videos.view.*
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PhotosFragment(private val website: String) : BaseFragment() {
 
@@ -50,6 +54,30 @@ class PhotosFragment(private val website: String) : BaseFragment() {
         }
 
         checkEmptyState()
+
+        root!!.recyclerView.addOnItemTouchListener(
+            RecyclerTouchListener(
+                requireActivity(),
+                root!!.recyclerView,
+                object : ClickListener {
+                    override fun onClick(view: View?, position: Int) {
+                        val bundle = Bundle()
+                        bundle.putSerializable("images", downloadFileList)
+                        bundle.putInt("position", position)
+
+                        val ft =
+                            requireActivity().getSupportFragmentManager().beginTransaction()
+                        val newFragment = StatusSliderFragment().newInstance()
+                        newFragment.setArguments(bundle)
+                        newFragment.show(ft, "slideshow")
+                    }
+
+                    override fun onLongClick(view: View?, position: Int) {
+                        Log.d(TAGI, "onLongClick")
+
+                    }
+                })
+        )
         return root
     }
 
@@ -66,7 +94,7 @@ class PhotosFragment(private val website: String) : BaseFragment() {
                     downloadFileList!!.add(DownloadFile(recordingUri, fileName))
                 }
             }
-            val fileModelAdapter = StatusViewAdapter(requireActivity(),downloadFileList!!)
+            val fileModelAdapter = StatusViewAdapter(requireActivity(), downloadFileList!!)
             root!!.recyclerView.layoutManager = GridLayoutManager(requireActivity(), 3)
             root!!.recyclerView.itemAnimator = DefaultItemAnimator()
             root!!.recyclerView.adapter = fileModelAdapter

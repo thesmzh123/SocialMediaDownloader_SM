@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.adapters.StatusViewAdapter
 import en.all.social.downloader.app.online.models.DownloadFile
+import en.all.social.downloader.app.online.utils.ClickListener
 import en.all.social.downloader.app.online.utils.Constants
 import en.all.social.downloader.app.online.utils.FileCheckerHelper
 import en.all.social.downloader.app.online.utils.FileCheckerHelper.isVideoFile
+import en.all.social.downloader.app.online.utils.RecyclerTouchListener
 import kotlinx.android.synthetic.main.fragment_photo_videos.view.*
 import java.io.File
 
@@ -47,7 +49,29 @@ class VideosFragment(private val website: String) : BaseFragment() {
             init(Constants.BUISNESS_STATUS_PATH)
         }
         checkEmptyState()
+        root!!.recyclerView.addOnItemTouchListener(
+            RecyclerTouchListener(
+                requireActivity(),
+                root!!.recyclerView,
+                object : ClickListener {
+                    override fun onClick(view: View?, position: Int) {
+                        val bundle = Bundle()
+                        bundle.putSerializable("images", downloadFileList)
+                        bundle.putInt("position", position)
 
+                        val ft =
+                            requireActivity().getSupportFragmentManager().beginTransaction()
+                        val newFragment = StatusSliderFragment().newInstance()
+                        newFragment.setArguments(bundle)
+                        newFragment.show(ft, "slideshow")
+                    }
+
+                    override fun onLongClick(view: View?, position: Int) {
+                        Log.d(Constants.TAGI, "onLongClick")
+
+                    }
+                })
+        )
         return root
     }
 
