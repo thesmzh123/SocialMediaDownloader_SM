@@ -66,5 +66,11 @@ class StatusSliderFragment : DialogFragment() {
         root!!.title.text = image.fileName
         imageUrl = image.filePath
     }
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(
+            STYLE_NORMAL,
+            android.R.style.Theme_Black_NoTitleBar_Fullscreen
+        )
+    }
 }
