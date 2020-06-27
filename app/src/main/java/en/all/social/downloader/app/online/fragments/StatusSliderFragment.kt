@@ -1,4 +1,4 @@
-@file:Suppress("UNCHECKED_CAST")
+@file:Suppress("UNCHECKED_CAST", "UNUSED_ANONYMOUS_PARAMETER")
 
 package en.all.social.downloader.app.online.fragments
 
@@ -16,7 +16,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.github.javiersantos.materialstyleddialogs.enums.Style
-import com.google.android.material.snackbar.Snackbar
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.adapters.SliderViewPagerAdapter
 import en.all.social.downloader.app.online.models.DownloadFile
@@ -31,7 +30,7 @@ class StatusSliderFragment : DialogFragment() {
         return StatusSliderFragment()
     }
 
-    var downloadFileList: ArrayList<DownloadFile>? = null
+    private var downloadFileList: ArrayList<DownloadFile>? = null
 
     var root: View? = null
     private var imageUrl = ""
@@ -66,7 +65,30 @@ class StatusSliderFragment : DialogFragment() {
         root!!.download.setOnClickListener {
             downloadStatus()
         }
+        root!!.share.setOnClickListener {
+            shareStatus()
+        }
         return root
+    }
+
+    private fun shareStatus() {
+        val intentShareFile = Intent(Intent.ACTION_SEND)
+        val fileWithinMyDir = File(imageUrl)
+        val uri: Uri
+        if (fileWithinMyDir.exists()) {
+            uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                FileProvider.getUriForFile(
+                    requireActivity(), requireActivity().packageName +
+                            ".provider", fileWithinMyDir
+                )
+            } else {
+                Uri.parse("file://$imageUrl")
+            }
+            intentShareFile.type = "*/*"
+            intentShareFile.putExtra(Intent.EXTRA_STREAM, uri)
+            intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            startActivity(Intent.createChooser(intentShareFile, "Share Via"))
+        }
     }
 
     private fun downloadStatus() {
