@@ -56,6 +56,7 @@ class HomeFragment : BaseFragment() {
             navigateFragmentByAds(R.id.nav_instagram, getString(R.string.instagram_website))
         }
         loadInterstial()
+        refreshAd(root!!.nativeAd,R.layout.ad_unified)
         return root
     }
 

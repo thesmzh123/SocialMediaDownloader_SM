@@ -14,7 +14,7 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.webkit.WebView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -24,10 +24,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.find.lost.app.phone.utils.SharedPrefUtils
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.formats.UnifiedNativeAd
+import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.htetznaing.lowcostvideo.LowCostVideo
 import en.all.social.downloader.app.online.R
@@ -35,6 +34,7 @@ import en.all.social.downloader.app.online.activities.MainActivity
 import en.all.social.downloader.app.online.models.DownloadFile
 import en.all.social.downloader.app.online.utils.Constants.DOWNLOAD_PATH
 import en.all.social.downloader.app.online.utils.Constants.TAGI
+import kotlinx.android.synthetic.main.ad_unified.view.*
 import kotlinx.android.synthetic.main.layout_loading_dialog.view.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -218,8 +218,12 @@ open class BaseFragment : Fragment() {
 
     //TODO: hide dialog
     fun hideDialog() {
-        if (dialog?.isShowing!!) {
-            dialog?.dismiss()
+        try {
+            if (dialog?.isShowing!!) {
+                dialog?.dismiss()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -315,4 +319,138 @@ open class BaseFragment : Fragment() {
         val adRequest = AdRequest.Builder().build()
         interstitial.loadAd(adRequest)
     }
+    //TODO: native adview
+
+    @SuppressLint("InflateParams")
+    fun refreshAd(frameLayout: FrameLayout, layout: Int) {
+
+        try {
+            if (!SharedPrefUtils.getBooleanData(requireActivity(), "hideAds")) {
+
+                val builder = AdLoader.Builder(requireActivity(), getString(R.string.nativead))
+
+                builder.forUnifiedNativeAd { unifiedNativeAd ->
+                    // OnUnifiedNativeAdLoadedListener implementation.
+                    try {
+
+                        val adView = layoutInflater
+                            .inflate(layout, null) as UnifiedNativeAdView
+                        populateUnifiedNativeAdView(unifiedNativeAd, adView)
+
+                        frameLayout.removeAllViews()
+                        frameLayout.addView(adView)
+                    } catch (e: NullPointerException) {
+                        e.printStackTrace()
+                    }
+                }
+
+
+                val adLoader = builder.withAdListener(object : AdListener() {
+                    override fun onAdFailedToLoad(errorCode: Int) {
+                        frameLayout.visibility = View.GONE
+                    }
+                }).build()
+
+                adLoader.loadAd(AdRequest.Builder().build())
+
+
+            } else {
+                frameLayout.visibility = View.GONE
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    //TODO: populateUnifiedNativeAdView
+    private fun populateUnifiedNativeAdView(
+        nativeAd: UnifiedNativeAd,
+        adView: UnifiedNativeAdView
+    ) {
+        // Get the video controller for the ad. One will always be provided, even if the ad doesn't
+        // have a video asset.
+        val vc = nativeAd.videoController
+
+        // Create a new VideoLifecycleCallbacks object and pass it to the VideoController. The
+        // VideoController will call methods on this object when events occur in the video
+        // lifecycle.
+        vc.videoLifecycleCallbacks = object : VideoController.VideoLifecycleCallbacks() {
+        }
+
+        val mediaView = adView.ad_media
+        val mainImageView = adView.ad_image
+
+        // Apps can check the VideoController's hasVideoContent property to determine if the
+        // NativeAppInstallAd has a video asset.
+        if (vc.hasVideoContent()) {
+            adView.mediaView = mediaView
+            mainImageView.visibility = View.GONE
+
+        } else {
+            adView.imageView = mainImageView
+            mediaView.visibility = View.GONE
+
+            // At least one image is guaranteed.
+            val images = nativeAd.images
+            mainImageView.setImageDrawable(images[0].drawable)
+
+        }
+
+        adView.headlineView = adView.findViewById(R.id.ad_headline)
+        adView.bodyView = adView.findViewById(R.id.ad_body)
+        adView.callToActionView = adView.findViewById(R.id.ad_call_to_action)
+        adView.iconView = adView.findViewById(R.id.ad_app_icon)
+        adView.priceView = adView.findViewById(R.id.ad_price)
+        adView.starRatingView = adView.findViewById(R.id.ad_stars)
+        adView.storeView = adView.findViewById(R.id.ad_store)
+        adView.advertiserView = adView.findViewById(R.id.ad_advertiser)
+
+        // Some assets are guaranteed to be in every UnifiedNativeAd.
+        (adView.headlineView as TextView).text = nativeAd.headline
+        (adView.bodyView as TextView).text = nativeAd.body
+        (adView.callToActionView as Button).text = nativeAd.callToAction
+
+        // These assets aren't guaranteed to be in every UnifiedNativeAd, so it's important to
+        // check before trying to display them.
+        if (nativeAd.icon == null) {
+            adView.iconView.visibility = View.GONE
+        } else {
+            (adView.iconView as ImageView).setImageDrawable(
+                nativeAd.icon.drawable
+            )
+            adView.iconView.visibility = View.VISIBLE
+        }
+
+        if (nativeAd.price == null) {
+            adView.priceView.visibility = View.INVISIBLE
+        } else {
+            adView.priceView.visibility = View.VISIBLE
+            (adView.priceView as TextView).text = nativeAd.price
+        }
+
+        if (nativeAd.store == null) {
+            adView.storeView.visibility = View.INVISIBLE
+        } else {
+            adView.storeView.visibility = View.VISIBLE
+            (adView.storeView as TextView).text = nativeAd.store
+        }
+
+        if (nativeAd.starRating == null) {
+            adView.starRatingView.visibility = View.INVISIBLE
+        } else {
+            (adView.starRatingView as RatingBar).rating = nativeAd.starRating!!.toFloat()
+            adView.starRatingView.visibility = View.VISIBLE
+        }
+
+        if (nativeAd.advertiser == null) {
+            adView.advertiserView.visibility = View.INVISIBLE
+        } else {
+            (adView.advertiserView as TextView).text = nativeAd.advertiser
+            adView.advertiserView.visibility = View.VISIBLE
+        }
+
+        adView.setNativeAd(nativeAd)
+    }
+
 }
