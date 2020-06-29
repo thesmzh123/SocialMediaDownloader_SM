@@ -1,6 +1,6 @@
 @file:Suppress("UNUSED_ANONYMOUS_PARAMETER")
 
-package com.video.downloading.app.downloader.online.app.utils
+package en.all.social.downloader.app.online.utils
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE

@@ -10,7 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import com.find.lost.app.phone.utils.SharedPrefUtils
+import en.all.social.downloader.app.online.utils.SharedPrefUtils
 import com.google.android.gms.ads.AdListener
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.adapters.StatusViewAdapter

@@ -1,4 +1,4 @@
-package com.find.lost.app.phone.utils
+package en.all.social.downloader.app.online.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -15,7 +15,7 @@ class InternetConnection {
     fun checkConnection(context: Context): Boolean {
         val connMgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val capabilities = connMgr.getNetworkCapabilities(connMgr.getActiveNetwork())
+            val capabilities = connMgr.getNetworkCapabilities(connMgr.activeNetwork)
             if (capabilities != null) {
                 when {
                     capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> return true

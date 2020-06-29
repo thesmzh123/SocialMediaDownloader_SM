@@ -18,8 +18,8 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.ashudevs.facebookurlextractor.FacebookExtractor
 import com.ashudevs.facebookurlextractor.FacebookFile
-import com.find.lost.app.phone.utils.InternetConnection
-import com.find.lost.app.phone.utils.SharedPrefUtils
+import en.all.social.downloader.app.online.utils.InternetConnection
+import en.all.social.downloader.app.online.utils.SharedPrefUtils
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.github.javiersantos.materialstyleddialogs.enums.Style
 import com.google.android.gms.ads.AdListener

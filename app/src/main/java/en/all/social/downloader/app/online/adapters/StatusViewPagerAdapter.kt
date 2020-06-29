@@ -3,8 +3,6 @@ package en.all.social.downloader.app.online.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import en.all.social.downloader.app.online.fragments.BrowserFragment
-import en.all.social.downloader.app.online.fragments.PasteLinkFragment
 import en.all.social.downloader.app.online.fragments.PhotosFragment
 import en.all.social.downloader.app.online.fragments.VideosFragment
 

@@ -1,4 +1,4 @@
-package com.find.lost.app.phone.utils
+package en.all.social.downloader.app.online.utils
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -13,7 +13,7 @@ class SharedPrefUtils private constructor() {
 
     companion object {
 
-        private val PREF_APP = "SocialMedia"
+        private const val PREF_APP = "SocialMedia"
 
         /**
          * Gets boolean data.

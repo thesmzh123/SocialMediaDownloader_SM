@@ -19,14 +19,14 @@ import android.webkit.*
 import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
-import com.find.lost.app.phone.utils.InternetConnection
-import com.find.lost.app.phone.utils.SharedPrefUtils
+import en.all.social.downloader.app.online.utils.InternetConnection
+import en.all.social.downloader.app.online.utils.SharedPrefUtils
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.github.javiersantos.materialstyleddialogs.enums.Style
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.htetznaing.lowcostvideo.LowCostVideo
 import com.htetznaing.lowcostvideo.Model.XModel
-import com.video.downloading.app.downloader.online.app.utils.PermissionsUtils
+import en.all.social.downloader.app.online.utils.PermissionsUtils
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.activities.FbVideoWatchActivity
 import en.all.social.downloader.app.online.models.VideoDownload

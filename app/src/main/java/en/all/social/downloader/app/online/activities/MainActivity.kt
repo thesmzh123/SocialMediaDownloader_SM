@@ -10,9 +10,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.find.lost.app.phone.utils.SharedPrefUtils
+import en.all.social.downloader.app.online.utils.SharedPrefUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.video.downloading.app.downloader.online.app.utils.PermissionsUtils
+import en.all.social.downloader.app.online.utils.PermissionsUtils
 import en.all.social.downloader.app.online.R
 
 

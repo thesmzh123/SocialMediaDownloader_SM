@@ -5,7 +5,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
-import com.find.lost.app.phone.utils.SharedPrefUtils
+import en.all.social.downloader.app.online.utils.SharedPrefUtils
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.utils.Constants.TAGI
 

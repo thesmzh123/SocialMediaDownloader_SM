@@ -24,7 +24,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.navigation.fragment.findNavController
-import com.find.lost.app.phone.utils.SharedPrefUtils
+import en.all.social.downloader.app.online.utils.SharedPrefUtils
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.gms.ads.formats.UnifiedNativeAdView
@@ -42,6 +42,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 open class BaseFragment : Fragment() {
     var root: View? = null
     var webview: WebView? = null
@@ -462,24 +463,32 @@ open class BaseFragment : Fragment() {
         val deleteDialog: AlertDialog = MaterialAlertDialogBuilder(requireActivity()).create()
         deleteDialog.setView(deleteDialogView)
         deleteDialog.setCancelable(false)
-        if (isTwitter) {
-            deleteDialogView.gif1.visibility = View.VISIBLE
-        } else if (isFacebook) {
-            deleteDialogView.gif2.visibility = View.VISIBLE
-        } else {
-            deleteDialogView.gif3.visibility = View.VISIBLE
+        when {
+            isTwitter -> {
+                deleteDialogView.gif1.visibility = View.VISIBLE
+            }
+            isFacebook -> {
+                deleteDialogView.gif2.visibility = View.VISIBLE
+            }
+            else -> {
+                deleteDialogView.gif3.visibility = View.VISIBLE
 
+            }
         }
         deleteDialog.setButton(
             AlertDialog.BUTTON_POSITIVE,
             getString(R.string.ok)
         ) { dialog, which -> // here you can add functions
-            if (isTwitter) {
-                SharedPrefUtils.saveData(requireActivity(), "isTwitter", true)
-            } else if (isFacebook) {
-                SharedPrefUtils.saveData(requireActivity(), "isFacebook", true)
-            } else {
-                SharedPrefUtils.saveData(requireActivity(), "isTikTok", true)
+            when {
+                isTwitter -> {
+                    SharedPrefUtils.saveData(requireActivity(), "isTwitter", true)
+                }
+                isFacebook -> {
+                    SharedPrefUtils.saveData(requireActivity(), "isFacebook", true)
+                }
+                else -> {
+                    SharedPrefUtils.saveData(requireActivity(), "isTikTok", true)
+                }
             }
         }
 

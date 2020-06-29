@@ -92,6 +92,7 @@ public class ZoomableExoPlayerView extends FrameLayout {
     private boolean controllerHideDuringAds;
     private boolean controllerHideOnTouch;
     private int textureViewRotation;
+    @SuppressLint("StaticFieldLeak")
     private static TextureView textureViewX;
     public ZoomableExoPlayerView(Context context) {
         this(context, null);
@@ -144,23 +145,23 @@ public class ZoomableExoPlayerView extends FrameLayout {
                 shutterColorSet = a.hasValue(R.styleable.PlayerView_shutter_background_color);
                 shutterColor = a.getColor(R.styleable.PlayerView_shutter_background_color, shutterColor);
                 playerLayoutId = a.getResourceId(R.styleable.PlayerView_player_layout_id, playerLayoutId);
-                useArtwork = a.getBoolean(R.styleable.PlayerView_use_artwork, useArtwork);
+                useArtwork = a.getBoolean(R.styleable.PlayerView_use_artwork, true);
                 defaultArtworkId =
                         a.getResourceId(R.styleable.PlayerView_default_artwork, defaultArtworkId);
-                useController = a.getBoolean(R.styleable.PlayerView_use_controller, useController);
+                useController = a.getBoolean(R.styleable.PlayerView_use_controller, true);
                 surfaceType = a.getInt(R.styleable.PlayerView_surface_type, surfaceType);
                 resizeMode = a.getInt(R.styleable.PlayerView_resize_mode, resizeMode);
                 controllerShowTimeoutMs =
                         a.getInt(R.styleable.PlayerView_show_timeout, controllerShowTimeoutMs);
                 controllerHideOnTouch =
-                        a.getBoolean(R.styleable.PlayerView_hide_on_touch, controllerHideOnTouch);
-                controllerAutoShow = a.getBoolean(R.styleable.PlayerView_auto_show, controllerAutoShow);
-                showBuffering = a.getBoolean(R.styleable.PlayerView_show_buffering, showBuffering);
+                        a.getBoolean(R.styleable.PlayerView_hide_on_touch, true);
+                controllerAutoShow = a.getBoolean(R.styleable.PlayerView_auto_show, true);
+                showBuffering = a.getBoolean(R.styleable.PlayerView_show_buffering, false);
                 keepContentOnPlayerReset =
                         a.getBoolean(
                                 R.styleable.PlayerView_keep_content_on_player_reset, keepContentOnPlayerReset);
                 controllerHideDuringAds =
-                        a.getBoolean(R.styleable.PlayerView_hide_during_ads, controllerHideDuringAds);
+                        a.getBoolean(R.styleable.PlayerView_hide_during_ads, true);
             } finally {
                 a.recycle();
             }
@@ -785,6 +786,7 @@ public class ZoomableExoPlayerView extends FrameLayout {
         return subtitleView;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (!useController || player == null || ev.getActionMasked() != MotionEvent.ACTION_DOWN) {
@@ -974,7 +976,6 @@ public class ZoomableExoPlayerView extends FrameLayout {
         logo.setBackgroundColor(resources.getColor(R.color.exo_edit_mode_background_color, null));
     }
 
-    @SuppressWarnings("deprecation")
     private static void configureEditModeLogo(Resources resources, ImageView logo) {
         logo.setImageDrawable(resources.getDrawable(R.drawable.exo_edit_mode_logo));
         logo.setBackgroundColor(resources.getColor(R.color.exo_edit_mode_background_color));

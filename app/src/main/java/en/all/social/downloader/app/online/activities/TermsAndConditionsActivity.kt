@@ -3,7 +3,7 @@ package en.all.social.downloader.app.online.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.find.lost.app.phone.utils.SharedPrefUtils
+import en.all.social.downloader.app.online.utils.SharedPrefUtils
 import en.all.social.downloader.app.online.R
 import kotlinx.android.synthetic.main.activity_terms_and_conditions.*
 
