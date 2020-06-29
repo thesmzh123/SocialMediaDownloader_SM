@@ -126,6 +126,15 @@
                 app:iconSize="@dimen/_14sdp" />
         </LinearLayout>
     </ScrollView>
-
+    <include
+        layout="@layout/banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="63dp"
+        tools:ignore="RtlHardcoded" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -11,14 +11,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.URLUtil
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.android.volley.*
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.ashudevs.facebookurlextractor.FacebookExtractor
 import com.ashudevs.facebookurlextractor.FacebookFile
 import com.find.lost.app.phone.utils.InternetConnection
+import com.find.lost.app.phone.utils.SharedPrefUtils
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.github.javiersantos.materialstyleddialogs.enums.Style
+import com.google.android.gms.ads.AdListener
 import com.google.android.material.textfield.TextInputEditText
 import com.htetznaing.lowcostvideo.LowCostVideo
 import com.htetznaing.lowcostvideo.Model.XModel
@@ -33,6 +37,7 @@ import en.all.social.downloader.app.online.utils.Constants.TIKTOK_FOLDER
 import en.all.social.downloader.app.online.utils.Constants.TWITTER_FOLDER
 import en.all.social.downloader.app.online.utils.TikTokDownloader
 import en.all.social.downloader.app.online.utils.TikTokLinkListener
+import kotlinx.android.synthetic.main.banner.view.*
 import kotlinx.android.synthetic.main.fragment_paste_link.view.*
 import org.json.JSONArray
 import org.json.JSONException
@@ -118,6 +123,8 @@ open class PasteLinkFragment(private val website: String) : BaseFragment() {
                 hideDialog()
             }
         })
+        loadInterstial()
+        adView(root!!.adView)
         return root
     }
 
@@ -285,8 +292,36 @@ open class PasteLinkFragment(private val website: String) : BaseFragment() {
             .setCancelable(false)
             .setPositiveText(getString(R.string.yes))
             .onPositive { dialog, which ->
-                startDownload(url, name, folderName)
-                urlText!!.text?.clear()
+                if (!SharedPrefUtils.getBooleanData(requireActivity(), "hideAds")) {
+                    hideDialog()
+                    if (interstitial.isLoaded) {
+                        if (ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(
+                                Lifecycle.State.STARTED
+                            )
+                        ) {
+                            interstitial.show()
+                        } else {
+                            Log.d(TAGI, "App Is In Background Ad Is Not Going To Show")
+
+                        }
+                    } else {
+                        startDownload(url, name, folderName)
+                        urlText!!.text?.clear()
+                    }
+                    interstitial.adListener = object : AdListener() {
+                        override fun onAdClosed() {
+                            requestNewInterstitial()
+                            startDownload(url, name, folderName)
+                            urlText!!.text?.clear()
+                        }
+                    }
+                } else {
+                    startDownload(url, name, folderName)
+                    urlText!!.text?.clear()
+
+                }
+
+
             }
             .setNegativeText(getString(R.string.no))
             .onNegative { dialog, which ->

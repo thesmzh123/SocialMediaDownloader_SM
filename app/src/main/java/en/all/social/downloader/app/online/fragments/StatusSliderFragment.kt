@@ -9,18 +9,27 @@ import android.net.Uri
 import android.os.Build
 import android.os.Build.VERSION
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import com.find.lost.app.phone.utils.SharedPrefUtils
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.github.javiersantos.materialstyleddialogs.enums.Style
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.InterstitialAd
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.adapters.SliderViewPagerAdapter
 import en.all.social.downloader.app.online.models.DownloadFile
+import en.all.social.downloader.app.online.utils.Constants
 import en.all.social.downloader.app.online.utils.Constants.DOWNLOAD_PATH
 import en.all.social.downloader.app.online.utils.Constants.WHTSAPP_FOLDER
 import kotlinx.android.synthetic.main.fragment_slider_status.view.*
@@ -31,6 +40,8 @@ class StatusSliderFragment : DialogFragment() {
     fun newInstance(): StatusSliderFragment {
         return StatusSliderFragment()
     }
+
+    private lateinit var interstitial: InterstitialAd
 
     private var downloadFileList: ArrayList<DownloadFile>? = null
 
@@ -67,7 +78,32 @@ class StatusSliderFragment : DialogFragment() {
 
 
         root!!.download.setOnClickListener {
-            downloadStatus()
+
+            if (!SharedPrefUtils.getBooleanData(requireActivity(), "hideAds")) {
+
+                if (interstitial.isLoaded) {
+                    if (ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(
+                            Lifecycle.State.STARTED
+                        )
+                    ) {
+                        interstitial.show()
+                    } else {
+                        Log.d(Constants.TAGI, "App Is In Background Ad Is Not Going To Show")
+                    }
+                } else {
+                    downloadStatus()
+
+                }
+                interstitial.adListener = object : AdListener() {
+                    override fun onAdClosed() {
+                        requestNewInterstitial()
+                        downloadStatus()
+
+                    }
+                }
+            } else {
+                downloadStatus()
+            }
         }
         root!!.share.setOnClickListener {
             shareStatus()
@@ -75,6 +111,8 @@ class StatusSliderFragment : DialogFragment() {
         root!!.repost.setOnClickListener {
             rePostStatus()
         }
+        loadInterstial()
+        adView(root!!.adView)
         return root
     }
 
@@ -197,5 +235,62 @@ class StatusSliderFragment : DialogFragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    //TODO: banner
+    private fun adView(adView: AdView) {
+//        adView.visibility = View.GONE
+        try {
+            if (!SharedPrefUtils.getBooleanData(requireActivity(), "hideAds")) {
+                val adRequest = AdRequest.Builder().build()
+                adView.loadAd(adRequest)
+                adView.adListener = object : AdListener() {
+
+                    override fun onAdLoaded() {
+                        adView.visibility = View.VISIBLE
+                    }
+
+                    override fun onAdFailedToLoad(error: Int) {
+                        adView.visibility = View.GONE
+                    }
+
+                }
+            } else {
+                adView.visibility = View.GONE
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    //TODO: load interstial
+    private fun loadInterstial() {
+        try {
+
+            Log.d(Constants.TAGI, "load ads")
+            if (!SharedPrefUtils.getBooleanData(requireActivity(), "hideAds")) {
+                interstitial = InterstitialAd(requireActivity())
+                interstitial.adUnitId = getString(R.string.interstitial)
+                try {
+                    if (!interstitial.isLoading && !interstitial.isLoaded) {
+                        val adRequest = AdRequest.Builder().build()
+                        interstitial.loadAd(adRequest)
+                    }
+                } catch (ex: Exception) {
+                    ex.printStackTrace()
+                    Log.d(Constants.TAGI, "error: " + ex.message)
+                }
+
+                requestNewInterstitial()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    //TODO: requestNewInterstitial
+    private fun requestNewInterstitial() {
+        val adRequest = AdRequest.Builder().build()
+        interstitial.loadAd(adRequest)
     }
 }
