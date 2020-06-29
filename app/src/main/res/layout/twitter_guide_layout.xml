@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/_14sdp"
+    android:layout_marginTop="@dimen/_20sdp"
+    android:layout_marginRight="@dimen/_14sdp"
+    android:orientation="vertical"
+    tools:ignore="UseCompoundDrawables">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:text="@string/how_to_download"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="bold" />
+
+    <com.cunoraz.gifview.library.GifView
+        android:id="@+id/gif1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:visibility="gone"
+        custom:gif="@drawable/twittergif" />
+
+    <com.cunoraz.gifview.library.GifView
+        android:id="@+id/gif2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:visibility="gone"
+        custom:gif="@drawable/fbgif" />
+
+    <com.cunoraz.gifview.library.GifView
+        android:id="@+id/gif3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:visibility="gone"
+        custom:gif="@drawable/tiktokgif" />
+</LinearLayout>

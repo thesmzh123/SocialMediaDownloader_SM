@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.webkit.WebView
@@ -36,6 +37,7 @@ import en.all.social.downloader.app.online.utils.Constants.DOWNLOAD_PATH
 import en.all.social.downloader.app.online.utils.Constants.TAGI
 import kotlinx.android.synthetic.main.ad_unified.view.*
 import kotlinx.android.synthetic.main.layout_loading_dialog.view.*
+import kotlinx.android.synthetic.main.twitter_guide_layout.view.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -339,7 +341,7 @@ open class BaseFragment : Fragment() {
 
                         frameLayout.removeAllViews()
                         frameLayout.addView(adView)
-                    } catch (e: NullPointerException) {
+                    } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 }
@@ -453,4 +455,34 @@ open class BaseFragment : Fragment() {
         adView.setNativeAd(nativeAd)
     }
 
+    fun guideDialog(isTwitter: Boolean, isFacebook: Boolean) {
+        val factory = LayoutInflater.from(requireActivity())
+        @SuppressLint("InflateParams") val deleteDialogView: View =
+            factory.inflate(R.layout.twitter_guide_layout, null)
+        val deleteDialog: AlertDialog = MaterialAlertDialogBuilder(requireActivity()).create()
+        deleteDialog.setView(deleteDialogView)
+        deleteDialog.setCancelable(false)
+        if (isTwitter) {
+            deleteDialogView.gif1.visibility = View.VISIBLE
+        } else if (isFacebook) {
+            deleteDialogView.gif2.visibility = View.VISIBLE
+        } else {
+            deleteDialogView.gif3.visibility = View.VISIBLE
+
+        }
+        deleteDialog.setButton(
+            AlertDialog.BUTTON_POSITIVE,
+            getString(R.string.ok)
+        ) { dialog, which -> // here you can add functions
+            if (isTwitter) {
+                SharedPrefUtils.saveData(requireActivity(), "isTwitter", true)
+            } else if (isFacebook) {
+                SharedPrefUtils.saveData(requireActivity(), "isFacebook", true)
+            } else {
+                SharedPrefUtils.saveData(requireActivity(), "isTikTok", true)
+            }
+        }
+
+        deleteDialog.show()
+    }
 }

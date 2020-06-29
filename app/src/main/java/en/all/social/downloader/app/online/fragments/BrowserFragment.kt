@@ -20,6 +20,7 @@ import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.find.lost.app.phone.utils.InternetConnection
+import com.find.lost.app.phone.utils.SharedPrefUtils
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.github.javiersantos.materialstyleddialogs.enums.Style
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -135,36 +136,41 @@ class BrowserFragment(private val website: String) : BaseFragment() {
         (anim as AlphaAnimation).repeatCount = Animation.INFINITE
 
         root!!.fab.setOnClickListener {
-            when {
-                videoDownloadList.isNullOrEmpty() -> {
-                    root!!.fab.clearAnimation()
-                    noResourceDialog()
-                }
-                webview!!.url.contains(getString(R.string.twitter_website)) -> {
-                    val split: Array<String> =
-                        twitterLink!!.split("\\?".toRegex()).toTypedArray()
-                    showDialog(getString(R.string.generate_download_link))
-                    xGetter!!.find(split[0])
-                }
-                webview!!.url.contains(getString(R.string.instagram_website)) -> {
-                    downloadVideo()
-                }
-                webview!!.url.contains(getString(R.string.linkedin_website)) -> {
-                    downloadVideo()
-                }
-                webview!!.url.contains(getString(R.string.tiktok_website)) -> {
+            if (InternetConnection().checkConnection(requireActivity())) {
 
-                    val tikTokDownloader =
-                        TikTokDownloader(tiktokLink.toString(), requireActivity())
-                    tikTokDownloader.execute()
-                    tikTokDownloader.setOnTikTokListener(object : TikTokLinkListener {
-                        override fun onResponseReceive(data: String?) {
-                            tiktokLink1 = data
-                            downloadVideo()
+                when {
+                    videoDownloadList.isNullOrEmpty() -> {
+                        root!!.fab.clearAnimation()
+                        noResourceDialog()
+                    }
+                    webview!!.url.contains(getString(R.string.twitter_website)) -> {
+                        val split: Array<String> =
+                            twitterLink!!.split("\\?".toRegex()).toTypedArray()
+                        showDialog(getString(R.string.generate_download_link))
+                        xGetter!!.find(split[0])
+                    }
+                    webview!!.url.contains(getString(R.string.instagram_website)) -> {
+                        downloadVideo()
+                    }
+                    webview!!.url.contains(getString(R.string.linkedin_website)) -> {
+                        downloadVideo()
+                    }
+                    webview!!.url.contains(getString(R.string.tiktok_website)) -> {
 
-                        }
-                    })
+                        val tikTokDownloader =
+                            TikTokDownloader(tiktokLink.toString(), requireActivity())
+                        tikTokDownloader.execute()
+                        tikTokDownloader.setOnTikTokListener(object : TikTokLinkListener {
+                            override fun onResponseReceive(data: String?) {
+                                tiktokLink1 = data
+                                downloadVideo()
+
+                            }
+                        })
+                    }
                 }
+            } else {
+                showToast(getString(R.string.no_internet))
             }
         }
 
@@ -317,24 +323,31 @@ class BrowserFragment(private val website: String) : BaseFragment() {
                 // cancelled due to SSL error
 
                 try {
-                    /*  if (view.url.contains(getString(R.string.twitter_website))) {
-                          if (isAdded) {
-                              if (!SharedPrefUtils.getBooleanData(requireActivity(), "isTwitter")) {
-                                  //                        guideDialog(true)
-                              }
-                          }
-                      }*/
+                    if (view.url.contains(getString(R.string.twitter_website))) {
+                        if (isAdded) {
+                            if (!SharedPrefUtils.getBooleanData(requireActivity(), "isTwitter")) {
+                                guideDialog(isTwitter = true, isFacebook = false)
+                            }
+                        }
+                    }
                     if (view.url.contains(getString(R.string.facebook_website))) {
                         root!!.fab.visibility = View.GONE
                         val handler = Handler()
                         handler.postDelayed({
                             webview!!.loadUrl(JavascriptNotation.value)
                         }, 3000)
-                        /*if (isAdded) {
+                        if (isAdded) {
                             if (!SharedPrefUtils.getBooleanData(requireActivity(), "isFacebook")) {
-                                //                        guideDialog(false)
+                                guideDialog(isTwitter = false, isFacebook = true)
                             }
-                        }*/
+                        }
+                    }
+                    if (view.url.contains(getString(R.string.tiktok_website))) {
+                        if (isAdded) {
+                            if (!SharedPrefUtils.getBooleanData(requireActivity(), "isTikTok")) {
+                                guideDialog(isTwitter = false, isFacebook = false)
+                            }
+                        }
                     }
 
                 } catch (e: Exception) {

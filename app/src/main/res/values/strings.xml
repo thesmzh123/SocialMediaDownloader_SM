@@ -72,4 +72,16 @@
     <string name="repost">Repost</string>
     <string name="download_this_status">Do you want to download this status?</string>
     <string name="download_videos_from_your_favorite_sites">Download Videos from your favorite sites</string>
+    <string name="how_to_download">How to download?</string>
+
+    <string name="agree">I have read and accept the <u>Terms and Conditions</u>.</string>
+    <string name="termsandc"><u>Terms and Conditions</u></string>
+
+    <string name="termpara">Our product i.e (All Social Media Downloader) asks user to grant certain permissions . This access is used by the application in the following ways:\n\n
+        \n1. Use storage permission to store the downloaded video.\n
+        \n2. Use internet to download the video.\n
+        \n3. Built-in codes to detect and download the video from specific websites.\n
+        \n4. Support only social media websites to download videos.\n
+    </string>
+    <string name="nextbtn">Agree and Continue</string>
 </resources>

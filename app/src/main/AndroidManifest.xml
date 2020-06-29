@@ -79,6 +79,10 @@
                 <action android:name="android.intent.action.ACTION_VIEW_DOWNLOADS" />
             </intent-filter>
         </receiver>
+        <activity
+            android:name=".activities.TermsAndConditionsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
