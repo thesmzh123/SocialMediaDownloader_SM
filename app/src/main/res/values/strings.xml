@@ -71,4 +71,5 @@
     <string name="no_video_status">No Video(s) Status Found!</string>
     <string name="repost">Repost</string>
     <string name="download_this_status">Do you want to download this status?</string>
+    <string name="download_videos_from_your_favorite_sites">Download Videos from your favorite sites</string>
 </resources>

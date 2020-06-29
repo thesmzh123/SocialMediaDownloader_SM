@@ -12,6 +12,7 @@ import en.all.social.downloader.app.online.R
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class HomeFragment : BaseFragment() {
 
 
@@ -24,7 +25,7 @@ class HomeFragment : BaseFragment() {
 
         changeToolbarColor(R.color.colorPrimary)
         root!!.fb.setOnClickListener {
-            navigateFragment(R.id.nav_facebook, getString(R.string.facebook_website))
+            navigateFragmentByAds(R.id.nav_facebook, getString(R.string.facebook_website))
         }
         root!!.whtsapp.setOnClickListener {
             val pictureDialog: AlertDialog.Builder = MaterialAlertDialogBuilder(requireActivity())
@@ -33,27 +34,28 @@ class HomeFragment : BaseFragment() {
                 getString(R.string.whtsapp_status),
                 getString(R.string.whtsapp_buisness_status)
             )
-            pictureDialog.setItems(pictureDialogItems,
-                { dialog, which ->
-                    when (which) {
-                        0 -> navigateFragment(R.id.nav_whtsapp, "statuses")
-                        1 -> navigateFragment(R.id.nav_whtsapp_buisness, "buisnessstatues")
-                    }
-                })
+            pictureDialog.setItems(pictureDialogItems
+            ) { dialog, which ->
+                when (which) {
+                    0 -> navigateFragmentByAds(R.id.nav_whtsapp, "statuses")
+                    1 -> navigateFragment(R.id.nav_whtsapp_buisness, "buisnessstatues")
+                }
+            }
             pictureDialog.show()
         }
         root!!.twitter.setOnClickListener {
-            navigateFragment(R.id.nav_twittetr, getString(R.string.twitter_website))
+            navigateFragmentByAds(R.id.nav_twittetr, getString(R.string.twitter_website))
         }
         root!!.linkedin.setOnClickListener {
-            navigateFragment(R.id.nav_linkedin, getString(R.string.linkedin_website))
+            navigateFragmentByAds(R.id.nav_linkedin, getString(R.string.linkedin_website))
         }
         root!!.tiktok.setOnClickListener {
             navigateFragment(R.id.nav_tiktok, getString(R.string.tiktok_website))
         }
         root!!.instagram.setOnClickListener {
-            navigateFragment(R.id.nav_instagram, getString(R.string.instagram_website))
+            navigateFragmentByAds(R.id.nav_instagram, getString(R.string.instagram_website))
         }
+        loadInterstial()
         return root
     }
 

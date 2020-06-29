@@ -9,6 +9,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ProcessLifecycleOwner
+import com.find.lost.app.phone.utils.SharedPrefUtils
+import com.google.android.gms.ads.AdListener
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.adapters.DownloadFileAdapter
 import en.all.social.downloader.app.online.models.DownloadFile
@@ -54,14 +58,50 @@ class DownloadFragment : BaseFragment() {
             )
         }
         root!!.instagramCard.setOnClickListener {
-            init(INSTAGRAM_FOLDER)
-            changeCardColor(
-                root!!.instagramCard,
-                root!!.fbCard,
-                root!!.twitterCard,
-                root!!.tiktokCard,
-                root!!.linkdeinCard
-            )
+            if (!SharedPrefUtils.getBooleanData(requireActivity(), "hideAds")) {
+                if (interstitial.isLoaded) {
+                    if (ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
+                    ) {
+                        interstitial.show()
+                    } else {
+                        Log.d(TAGI, "App Is In Background Ad Is Not Going To Show")
+                    }
+                } else {
+                    init(INSTAGRAM_FOLDER)
+                    changeCardColor(
+                        root!!.instagramCard,
+                        root!!.fbCard,
+                        root!!.twitterCard,
+                        root!!.tiktokCard,
+                        root!!.linkdeinCard
+                    )
+
+                }
+                interstitial.adListener = object : AdListener() {
+                    override fun onAdClosed() {
+                        requestNewInterstitial()
+                        init(INSTAGRAM_FOLDER)
+                        changeCardColor(
+                            root!!.instagramCard,
+                            root!!.fbCard,
+                            root!!.twitterCard,
+                            root!!.tiktokCard,
+                            root!!.linkdeinCard
+                        )
+
+                    }
+                }
+            } else {
+                init(INSTAGRAM_FOLDER)
+                changeCardColor(
+                    root!!.instagramCard,
+                    root!!.fbCard,
+                    root!!.twitterCard,
+                    root!!.tiktokCard,
+                    root!!.linkdeinCard
+                )
+            }
+
         }
 
         root!!.twitterCard.setOnClickListener {
@@ -75,14 +115,50 @@ class DownloadFragment : BaseFragment() {
             )
         }
         root!!.tiktokCard.setOnClickListener {
-            init(TIKTOK_FOLDER)
-            changeCardColor(
-                root!!.tiktokCard,
-                root!!.fbCard,
-                root!!.instagramCard,
-                root!!.twitterCard,
-                root!!.linkdeinCard
-            )
+            if (!SharedPrefUtils.getBooleanData(requireActivity(), "hideAds")) {
+                if (interstitial.isLoaded) {
+                    if (ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
+                    ) {
+                        interstitial.show()
+                    } else {
+                        Log.d(TAGI, "App Is In Background Ad Is Not Going To Show")
+                    }
+                } else {
+                    init(TIKTOK_FOLDER)
+                    changeCardColor(
+                        root!!.tiktokCard,
+                        root!!.fbCard,
+                        root!!.instagramCard,
+                        root!!.twitterCard,
+                        root!!.linkdeinCard
+                    )
+
+                }
+                interstitial.adListener = object : AdListener() {
+                    override fun onAdClosed() {
+                        requestNewInterstitial()
+                        init(TIKTOK_FOLDER)
+                        changeCardColor(
+                            root!!.tiktokCard,
+                            root!!.fbCard,
+                            root!!.instagramCard,
+                            root!!.twitterCard,
+                            root!!.linkdeinCard
+                        )
+
+                    }
+                }
+            } else {
+                init(TIKTOK_FOLDER)
+                changeCardColor(
+                    root!!.tiktokCard,
+                    root!!.fbCard,
+                    root!!.instagramCard,
+                    root!!.twitterCard,
+                    root!!.linkdeinCard
+                )
+            }
+
         }
         root!!.linkdeinCard.setOnClickListener {
             init(LINKEDIN_FOLDER)
@@ -103,6 +179,7 @@ class DownloadFragment : BaseFragment() {
             root!!.tiktokCard,
             root!!.linkdeinCard
         )
+        loadInterstial()
         return root
     }
 
