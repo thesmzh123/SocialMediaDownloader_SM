@@ -38,14 +38,14 @@ public class VideoControllerView extends FrameLayout {
     StringBuilder mFormatBuilder;
     Formatter mFormatter;
     private MediaPlayerControl mPlayer;
-    private Context mContext;
+    private final Context mContext;
     private ViewGroup mAnchor;
     private View mRoot;
     private ProgressBar mProgress;
     private TextView mEndTime, mCurrentTime;
     private boolean mShowing;
     private boolean mDragging;
-    private boolean mUseFastForward;
+    private final boolean mUseFastForward;
     private boolean mFromXml;
     private boolean mListenersSet;
     private OnClickListener mNextListener, mPrevListener;
@@ -55,12 +55,12 @@ public class VideoControllerView extends FrameLayout {
     private ImageView mNextButton;
     private ImageView mPrevButton;
     private ImageView mFullscreenButton;
-    private Handler mHandler = new MessageHandler(this);
-    private OnClickListener mPauseListener = v -> {
+    private final Handler mHandler = new MessageHandler(this);
+    private final OnClickListener mPauseListener = v -> {
         doPauseResume();
         show(sDefaultTimeout);
     };
-    private OnClickListener mFullscreenListener = v -> {
+    private final OnClickListener mFullscreenListener = v -> {
         doToggleFullscreen();
         show(sDefaultTimeout);
     };
@@ -75,7 +75,7 @@ public class VideoControllerView extends FrameLayout {
     // The second scenario involves the user operating the scroll ball, in this
     // case there WON'T BE onStartTrackingTouch/onStopTrackingTouch notifications,
     // we will simply apply the updated position without suspending regular updates.
-    private OnSeekBarChangeListener mSeekListener = new OnSeekBarChangeListener() {
+    private final OnSeekBarChangeListener mSeekListener = new OnSeekBarChangeListener() {
         public void onStartTrackingTouch(SeekBar bar) {
             show(3600000);
 
@@ -119,7 +119,7 @@ public class VideoControllerView extends FrameLayout {
             mHandler.sendEmptyMessage(SHOW_PROGRESS);
         }
     };
-    private OnClickListener mRewListener = new OnClickListener() {
+    private final OnClickListener mRewListener = new OnClickListener() {
         public void onClick(View v) {
             if (mPlayer == null) {
                 return;
@@ -133,7 +133,7 @@ public class VideoControllerView extends FrameLayout {
             show(sDefaultTimeout);
         }
     };
-    private OnClickListener mFfwdListener = new OnClickListener() {
+    private final OnClickListener mFfwdListener = new OnClickListener() {
         public void onClick(View v) {
             if (mPlayer == null) {
                 return;
@@ -495,11 +495,7 @@ public class VideoControllerView extends FrameLayout {
             return;
         }
 
-        if (mPlayer.isFullScreen()) {
-            mFullscreenButton.setImageResource(R.drawable.curve_fb_drawable);
-        } else {
-            mFullscreenButton.setImageResource(R.drawable.curve_fb_drawable);
-        }
+        mFullscreenButton.setImageResource(R.drawable.curve_fb_drawable);
     }
 
     private void doPauseResume() {

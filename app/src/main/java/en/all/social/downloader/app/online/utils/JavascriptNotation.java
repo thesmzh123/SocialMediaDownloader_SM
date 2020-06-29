@@ -1,7 +1,7 @@
 package en.all.social.downloader.app.online.utils;
 
 public class JavascriptNotation {
-    public static String value = "javascript:" +
+    public static final String value = "javascript:" +
             "var e=0;\n" +
             "window.onscroll=function()\n" +
             "{\n" +
@@ -60,7 +60,7 @@ public class JavascriptNotation {
             "}";
 
 
-    public static String valueResource="javascript:" +
+    public static final String valueResource="javascript:" +
             "var e=document.querySelectorAll(\"span\"); " +
             "if(e[0]!=undefined)" +
             "{" +
@@ -80,7 +80,7 @@ public class JavascriptNotation {
             "\t}\n" +
             "}\n";
 
-    public static String getValue="javascript:" +
+    public static final String getValue="javascript:" +
             "var e=0;\n" +
             "window.onscroll=function()\n" +
             "{\n" +
