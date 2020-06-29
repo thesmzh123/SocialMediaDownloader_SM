@@ -75,7 +75,7 @@ class TikTokDownloader(private val url1: String, val context: Context) :
         thumbnailURL = thumbnailURL.substring(0, thumbnailURL.indexOf("\""))
         Log.d(TAGI, "ThumbnailURL: $thumbnailURL")
 
-        //Grab content URL (video file)
+        //Grab contenx`t URL (video file)
         var contentURL = data.substring(data.indexOf("contentUrl") + 13)
         contentURL = contentURL.substring(0, contentURL.indexOf("?"))
         return contentURL
