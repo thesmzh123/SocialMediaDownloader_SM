@@ -137,7 +137,9 @@ open class PasteLinkFragment(private val website: String) : BaseFragment() {
                     checkUrl() -> {
                         showToast(getString(R.string.valid_url))
                     }
-                    urlText!!.text.toString().contains(getString(R.string.tiktok_website)) -> {
+                    urlText!!.text.toString()
+                        .contains(getString(R.string.tiktok_website)) || urlText!!.text.toString()
+                        .contains("https://vm.tiktok.com/") -> {
                         val tikTokDownloader =
                             TikTokDownloader(urlText!!.text.toString(), requireActivity())
                         tikTokDownloader.execute()

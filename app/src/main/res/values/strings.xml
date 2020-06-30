@@ -84,4 +84,8 @@
         \n4. Support only social media websites to download videos.\n
     </string>
     <string name="nextbtn">Agree and Continue</string>
+    <string name="do_you_want_exit">Do you want to exit?</string>
+    <string name="exit">Exit</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="remove_ads">Remove Ads</string>
 </resources>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "90190579442",
+    "firebase_url": "https://synergy-apps-2287e.firebaseio.com",
+    "project_id": "synergy-apps-2287e",
+    "storage_bucket": "synergy-apps-2287e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90190579442:android:8cd6df446ba4df83a0f26b",
+        "android_client_info": {
+          "package_name": "en.all.social.downloader.app.online"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90190579442-o5pu5i0obqgjrpm3cgiuvjcsd0f0je4t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM5JAUbgz8m_XsyZKwhMwmU6WSWirf8XQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90190579442-o5pu5i0obqgjrpm3cgiuvjcsd0f0je4t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

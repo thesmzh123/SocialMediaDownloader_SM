@@ -1,5 +1,7 @@
 package en.all.social.downloader.app.online.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +9,8 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AlertDialog
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
+import com.github.javiersantos.materialstyleddialogs.enums.Style
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import en.all.social.downloader.app.online.R
 import kotlinx.android.synthetic.main.fragment_home.view.*
@@ -34,7 +38,8 @@ class HomeFragment : BaseFragment() {
                 getString(R.string.whtsapp_status),
                 getString(R.string.whtsapp_buisness_status)
             )
-            pictureDialog.setItems(pictureDialogItems
+            pictureDialog.setItems(
+                pictureDialogItems
             ) { dialog, which ->
                 when (which) {
                     0 -> navigateFragmentByAds(R.id.nav_whtsapp, "statuses")
@@ -56,13 +61,14 @@ class HomeFragment : BaseFragment() {
             navigateFragmentByAds(R.id.nav_instagram, getString(R.string.instagram_website))
         }
         loadInterstial()
-        refreshAd(root!!.nativeAd,R.layout.ad_unified)
+        refreshAd(root!!.nativeAd, R.layout.ad_unified)
         return root
     }
 
     private var callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            requireActivity().finish()
+//            requireActivity().finish()
+            exit()
         }
     }
 
@@ -71,4 +77,28 @@ class HomeFragment : BaseFragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
+    private fun exit() {
+        val builder =
+            MaterialStyledDialog.Builder(requireActivity())
+        builder
+            .setDescription(getString(R.string.do_you_want_exit))
+            .setStyle(Style.HEADER_WITH_ICON)
+            .setIcon(R.drawable.ic_baseline_rate_review_24)
+            .withDialogAnimation(true)
+            .setPositiveText(getString(R.string.exit))
+            .onPositive { dialog, which -> requireActivity().finishAffinity() }
+            .setNegativeText(getString(R.string.rate_us))
+            .onNegative { dialog, which ->
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=" + requireActivity().packageName)
+                    )
+                )
+            }.setNeutralText(getString(R.string.cancel))
+            .onNeutral { dialog, which -> dialog.dismiss() }
+
+        val dialog = builder.build()
+        dialog.show()
+      }
 }

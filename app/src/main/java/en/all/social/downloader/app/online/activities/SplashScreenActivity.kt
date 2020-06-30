@@ -19,7 +19,7 @@ class SplashScreenActivity : BaseActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         setContentView(R.layout.activity_splash_screen)
-
+        fetchKeyIO()
 
         loadInterstial()
 

@@ -23,4 +23,7 @@ object Constants {
         Environment.getExternalStorageDirectory().absolutePath + "/WhatsApp/Media/.Statuses"
     val BUISNESS_STATUS_PATH =
         Environment.getExternalStorageDirectory().absolutePath + "/WhatsApp Business/Media/.Statuses"
+
+//        const val PRODUCT_KEY  = "android.test.purchased"
+    const val PRODUCT_KEY = "en.all.social.downloader.app.online"
 }
