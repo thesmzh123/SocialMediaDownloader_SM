@@ -129,7 +129,7 @@ class PermissionsUtils {
     }*/
 
     private fun showMessageOKCancel(message: String, okListener: DialogInterface.OnClickListener) {
-        MaterialAlertDialogBuilder(activity)
+        MaterialAlertDialogBuilder(activity!!)
             .setMessage(message)
             .setPositiveButton(R.string.ok, okListener)
             .setNegativeButton(

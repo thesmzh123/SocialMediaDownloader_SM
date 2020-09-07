@@ -143,19 +143,19 @@ class BrowserFragment(private val website: String) : BaseFragment() {
                         root!!.fab.clearAnimation()
                         noResourceDialog()
                     }
-                    webview!!.url.contains(getString(R.string.twitter_website)) -> {
+                    webview!!.url!!.contains(getString(R.string.twitter_website)) -> {
                         val split: Array<String> =
                             twitterLink!!.split("\\?".toRegex()).toTypedArray()
                         showDialog(getString(R.string.generate_download_link))
                         xGetter!!.find(split[0])
                     }
-                    webview!!.url.contains(getString(R.string.instagram_website)) -> {
+                    webview!!.url!!.contains(getString(R.string.instagram_website)) -> {
                         downloadVideo()
                     }
-                    webview!!.url.contains(getString(R.string.linkedin_website)) -> {
+                    webview!!.url!!.contains(getString(R.string.linkedin_website)) -> {
                         downloadVideo()
                     }
-                    webview!!.url.contains(getString(R.string.tiktok_website)) -> {
+                    webview!!.url!!.contains(getString(R.string.tiktok_website)) -> {
 
                         val tikTokDownloader =
                             TikTokDownloader(tiktokLink.toString(), requireActivity())
@@ -239,16 +239,16 @@ class BrowserFragment(private val website: String) : BaseFragment() {
             if (permissionsUtils != null) {
                 if (permissionsUtils.isAllPermissionAvailable()) {
                     when {
-                        webview!!.url.contains(getString(R.string.twitter_website)) -> {
+                        webview!!.url!!.contains(getString(R.string.twitter_website)) -> {
                             startDownload(twitterLink1, "Twitter_$rnds", TWITTER_FOLDER)
                         }
-                        webview!!.url.contains(getString(R.string.instagram_website)) -> {
+                        webview!!.url!!.contains(getString(R.string.instagram_website)) -> {
                             startDownload(linked, "Instagram_$rnds", INSTAGRAM_FOLDER)
                         }
-                        webview!!.url.contains(getString(R.string.linkedin_website)) -> {
+                        webview!!.url!!.contains(getString(R.string.linkedin_website)) -> {
                             startDownload(linked, "Linkedin_$rnds", LINKEDIN_FOLDER)
                         }
-                        webview!!.url.contains(getString(R.string.tiktok_website)) -> {
+                        webview!!.url!!.contains(getString(R.string.tiktok_website)) -> {
                             startDownload(tiktokLink1, "TIKTOK_$rnds", TIKTOK_FOLDER)
                         }
                     }
@@ -260,16 +260,16 @@ class BrowserFragment(private val website: String) : BaseFragment() {
             }
         } else {
             when {
-                webview!!.url.contains(getString(R.string.twitter_website)) -> {
+                webview!!.url!!.contains(getString(R.string.twitter_website)) -> {
                     startDownload(twitterLink1, "Twitter_$rnds", TWITTER_FOLDER)
                 }
-                webview!!.url.contains(getString(R.string.instagram_website)) -> {
+                webview!!.url!!.contains(getString(R.string.instagram_website)) -> {
                     startDownload(linked, "Instagram_$rnds", INSTAGRAM_FOLDER)
                 }
-                webview!!.url.contains(getString(R.string.linkedin_website)) -> {
+                webview!!.url!!.contains(getString(R.string.linkedin_website)) -> {
                     startDownload(linked, "Linkedin_$rnds", LINKEDIN_FOLDER)
                 }
-                webview!!.url.contains(getString(R.string.tiktok_website)) -> {
+                webview!!.url!!.contains(getString(R.string.tiktok_website)) -> {
                     startDownload(tiktokLink1, "TikTok_$rnds", TIKTOK_FOLDER)
                 }
             }
@@ -323,14 +323,14 @@ class BrowserFragment(private val website: String) : BaseFragment() {
                 // cancelled due to SSL error
 
                 try {
-                    if (view.url.contains(getString(R.string.twitter_website))) {
+                    if (view.url!!.contains(getString(R.string.twitter_website))) {
                         if (isAdded) {
                             if (!SharedPrefUtils.getBooleanData(requireActivity(), "isTwitter")) {
                                 guideDialog(isTwitter = true, isFacebook = false)
                             }
                         }
                     }
-                    if (view.url.contains(getString(R.string.facebook_website))) {
+                    if (view.url!!.contains(getString(R.string.facebook_website))) {
                         root!!.fab.visibility = View.GONE
                         val handler = Handler()
                         handler.postDelayed({
@@ -342,7 +342,7 @@ class BrowserFragment(private val website: String) : BaseFragment() {
                             }
                         }
                     }
-                    if (view.url.contains(getString(R.string.tiktok_website))) {
+                    if (view.url!!.contains(getString(R.string.tiktok_website))) {
                         if (isAdded) {
                             if (!SharedPrefUtils.getBooleanData(requireActivity(), "isTikTok")) {
                                 guideDialog(isTwitter = false, isFacebook = false)
@@ -361,89 +361,91 @@ class BrowserFragment(private val website: String) : BaseFragment() {
                     val page = view.url
                     Log.d(TAGI, "url1: $page")
                     val title = view.title
-                    if (page.contains(getString(R.string.facebook_website))) {
-                        root!!.fab.visibility = View.GONE
-                        val handler = Handler()
-                        handler.postDelayed({
-                            webview!!.loadUrl(JavascriptNotation.valueResource)
-                            webview!!.loadUrl(JavascriptNotation.getValue)
-                        }, 3000)
-                    } else {
-                        object : VideoContentSearch(requireActivity(), url, page, title) {
-                            override fun onStartInspectingURL() {
-                                Handler(Looper.getMainLooper()).post {
-                                    Log.d(TAGI, "onStartInspectingURL")
-                                }
-                            }
-
-                            override fun onFinishedInspectingURL(finishedAll: Boolean) {
-                                HttpsURLConnection.setDefaultSSLSocketFactory(defaultSSLSF)
-                                if (finishedAll) {
+                    if (page != null) {
+                        if (page.contains(getString(R.string.facebook_website))) {
+                            root!!.fab.visibility = View.GONE
+                            val handler = Handler()
+                            handler.postDelayed({
+                                webview!!.loadUrl(JavascriptNotation.valueResource)
+                                webview!!.loadUrl(JavascriptNotation.getValue)
+                            }, 3000)
+                        } else {
+                            object : VideoContentSearch(requireActivity(), url, page, title!!) {
+                                override fun onStartInspectingURL() {
                                     Handler(Looper.getMainLooper()).post {
-                                        Log.d(TAGI, "onFinishedInspectingURL")
+                                        Log.d(TAGI, "onStartInspectingURL")
                                     }
                                 }
-                            }
 
-                            override fun onVideoFound(
-                                size: String?,
-                                type: String?,
-                                link: String?,
-                                name: String?,
-                                page: String?,
-                                chunked: Boolean,
-                                website: String?
-                            ) {
-                                try {
-                                    requireActivity()
-                                        .runOnUiThread {
+                                override fun onFinishedInspectingURL(finishedAll: Boolean) {
+                                    HttpsURLConnection.setDefaultSSLSocketFactory(defaultSSLSF)
+                                    if (finishedAll) {
+                                        Handler(Looper.getMainLooper()).post {
+                                            Log.d(TAGI, "onFinishedInspectingURL")
+                                        }
+                                    }
+                                }
 
-                                            if (page != null) {
-                                                when {
-                                                    page.contains(getString(R.string.twitter_website)) -> {
+                                override fun onVideoFound(
+                                    size: String?,
+                                    type: String?,
+                                    link: String?,
+                                    name: String?,
+                                    page: String?,
+                                    chunked: Boolean,
+                                    website: String?
+                                ) {
+                                    try {
+                                        requireActivity()
+                                            .runOnUiThread {
 
-                                                        if (isAdded) {
-                                                            clipTweet()
+                                                if (page != null) {
+                                                    when {
+                                                        page.contains(getString(R.string.twitter_website)) -> {
+
+                                                            if (isAdded) {
+                                                                clipTweet()
+                                                            }
                                                         }
-                                                    }
-                                                    page.contains(getString(R.string.tiktok_website)) -> {
+                                                        page.contains(getString(R.string.tiktok_website)) -> {
 
-                                                        if (isAdded) {
-                                                            clipTweet()
+                                                            if (isAdded) {
+                                                                clipTweet()
+                                                            }
                                                         }
-                                                    }
-                                                    else -> {
-                                                        root!!.fab.clearAnimation()
-                                                        root!!.fab.startAnimation(anim)
+                                                        else -> {
+                                                            root!!.fab.clearAnimation()
+                                                            root!!.fab.startAnimation(anim)
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
-                                    videoDownloadList!!.clear()
-                                    Log.d(
-                                        TAGI,
-                                        "onVideoFound: $size,$type,$link,$name,$page,$chunked,$website"
-                                    )
-                                    videoDownloadList!!.add(
-                                        VideoDownload(
-                                            size.toString(),
-                                            type.toString(),
-                                            link.toString(),
-                                            name.toString(),
-                                            page.toString(),
-                                            chunked,
-                                            website.toString()
+                                        videoDownloadList!!.clear()
+                                        Log.d(
+                                            TAGI,
+                                            "onVideoFound: $size,$type,$link,$name,$page,$chunked,$website"
                                         )
-                                    )
+                                        videoDownloadList!!.add(
+                                            VideoDownload(
+                                                size.toString(),
+                                                type.toString(),
+                                                link.toString(),
+                                                name.toString(),
+                                                page.toString(),
+                                                chunked,
+                                                website.toString()
+                                            )
+                                        )
 
 
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+
                                 }
 
-                            }
-
-                        }.start()
+                            }.start()
+                        }
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()

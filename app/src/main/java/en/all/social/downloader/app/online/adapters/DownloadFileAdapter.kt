@@ -104,7 +104,7 @@ class DownloadFileAdapter(
 
 
         @SuppressLint("DefaultLocale") val hms = String.format(
-            "%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(time.toLong()),
+            "%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(time!!.toLong()),
             TimeUnit.MILLISECONDS.toMinutes(time.toLong()) - TimeUnit.HOURS.toMinutes(
                 TimeUnit.MILLISECONDS.toHours(time.toLong())
             ),

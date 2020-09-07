@@ -105,6 +105,7 @@ class VideosFragment(private val website: String) : BaseFragment() {
                     }
                 })
         )
+        loadInterstial()
         return root
     }
 
