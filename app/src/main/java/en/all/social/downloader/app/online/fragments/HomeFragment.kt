@@ -14,6 +14,7 @@ import com.github.javiersantos.materialstyleddialogs.enums.Style
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import en.all.social.downloader.app.online.R
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.native_ad_layout.view.*
 
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")

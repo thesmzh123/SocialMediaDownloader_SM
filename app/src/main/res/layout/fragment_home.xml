@@ -174,12 +174,13 @@
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <FrameLayout
+         <!--   <FrameLayout
                 android:id="@+id/nativeAd"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_margin="@dimen/_10sdp" />
-
+-->
+            <include layout="@layout/native_ad_layout"/>
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/instagram"
                 android:layout_width="match_parent"
