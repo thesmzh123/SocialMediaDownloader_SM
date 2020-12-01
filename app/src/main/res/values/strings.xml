@@ -88,6 +88,10 @@
     <string name="exit">Exit</string>
     <string name="rate_us">Rate Us</string>
     <string name="remove_ads">Remove Ads</string>
-    <string name="loading">Loading...</string>
-    <string name="facebook_video_download_s">Facebook Video Download(s)</string>
+    <string name="loading">Loading…</string>
+    <string name="facebook_video_download_s">Facebook Video Downloaded</string>
+    <string name="linkedin_video_downloaded">Linkedin Video Downloaded</string>
+    <string name="instagram_video_downloaded">Instagram Video Downloaded</string>
+    <string name="tiktok_video_downloaded">TikTok Video Downloaded</string>
+    <string name="twitter_video_downloaded">Twitter Video Downloaded</string>
 </resources>

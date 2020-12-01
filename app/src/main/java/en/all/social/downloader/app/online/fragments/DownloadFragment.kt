@@ -30,6 +30,7 @@ import en.all.social.downloader.app.online.utils.SharedPrefUtils
 import kotlinx.android.synthetic.main.download_recyclerview_layout.view.emptyView
 import kotlinx.android.synthetic.main.download_recyclerview_layout.view.recyclerView
 import kotlinx.android.synthetic.main.fragment_download.view.*
+import kotlinx.android.synthetic.main.native_ad_layout.view.*
 import java.io.File
 
 
@@ -186,14 +187,73 @@ class DownloadFragment : BaseFragment() {
             root!!.tiktokCard,
             root!!.linkdeinCard
         )
+        refreshAd(root!!.nativeAd, R.layout.ad_unified)
+
         loadInterstial()
         root!!.fb.setOnClickListener {
             openBottomSheet(FB_FOLDER)
         }
+        root!!.linkedin.setOnClickListener {
+            openBottomSheet(LINKEDIN_FOLDER)
+        }
+        root!!.instagram.setOnClickListener {
+            if (!SharedPrefUtils.getBooleanData(requireActivity(), "hideAds")) {
+                if (interstitial.isLoaded) {
+                    if (ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
+                    ) {
+                        interstitial.show()
+                    } else {
+                        Log.d(TAGI, "App Is In Background Ad Is Not Going To Show")
+                    }
+                } else {
+                    openBottomSheet(INSTAGRAM_FOLDER)
+
+
+                }
+                interstitial.adListener = object : AdListener() {
+                    override fun onAdClosed() {
+                        requestNewInterstitial()
+                        openBottomSheet(INSTAGRAM_FOLDER)
+                    }
+                }
+            } else {
+                openBottomSheet(INSTAGRAM_FOLDER)
+            }
+        }
+        root!!.twitter.setOnClickListener {
+            openBottomSheet(TWITTER_FOLDER)
+        }
+        root!!.tiktok.setOnClickListener {
+            if (!SharedPrefUtils.getBooleanData(requireActivity(), "hideAds")) {
+                if (interstitial.isLoaded) {
+                    if (ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
+                    ) {
+                        interstitial.show()
+                    } else {
+                        Log.d(TAGI, "App Is In Background Ad Is Not Going To Show")
+                    }
+                } else {
+                    openBottomSheet(TIKTOK_FOLDER)
+
+
+                }
+                interstitial.adListener = object : AdListener() {
+                    override fun onAdClosed() {
+                        requestNewInterstitial()
+                        openBottomSheet(TIKTOK_FOLDER)
+
+
+                    }
+                }
+            } else {
+                openBottomSheet(TIKTOK_FOLDER)
+
+            }
+        }
         return root
     }
 
-    @SuppressLint("StaticFieldLeak")
+    @SuppressLint("StaticFieldLeak", "InflateParams")
     private fun openBottomSheet(folderName: String) {
         val mBottomSheetDialog = RoundedBottomSheetDialog(requireActivity())
         sheetView = layoutInflater.inflate(R.layout.download_recyclerview_layout, null)

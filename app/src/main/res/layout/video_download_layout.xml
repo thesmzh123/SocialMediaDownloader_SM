@@ -78,7 +78,7 @@
                             android:background="@android:color/black"
                             android:padding="@dimen/_2sdp"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/_10ssp"
+                            android:textSize="@dimen/_9ssp"
                             tools:ignore="RelativeOverlap" />
                     </FrameLayout>
 
