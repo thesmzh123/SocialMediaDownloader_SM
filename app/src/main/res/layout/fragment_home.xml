@@ -27,6 +27,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_100sdp"
                 android:backgroundTint="@color/whtsappColor"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_5sdp">
 
@@ -68,9 +70,10 @@
                         android:padding="@dimen/_6sdp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_baseline_arrow_forward_24"
-                        android:tint="@android:color/white" />
+                        app:tint="@android:color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
+            <include layout="@layout/native_ad_layout" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/fb"
@@ -78,6 +81,8 @@
                 android:layout_height="@dimen/_100sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:backgroundTint="@color/fbColor"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_5sdp">
 
@@ -119,7 +124,7 @@
                         android:padding="@dimen/_6sdp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_baseline_arrow_forward_24"
-                        android:tint="@android:color/white" />
+                        app:tint="@android:color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -129,6 +134,8 @@
                 android:layout_height="@dimen/_100sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:backgroundTint="@color/linkedinColor"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_5sdp">
 
@@ -170,22 +177,24 @@
                         android:padding="@dimen/_6sdp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_baseline_arrow_forward_24"
-                        android:tint="@android:color/white" />
+                        app:tint="@android:color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
 
-         <!--   <FrameLayout
-                android:id="@+id/nativeAd"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_margin="@dimen/_10sdp" />
--->
-            <include layout="@layout/native_ad_layout"/>
+            <!--   <FrameLayout
+                   android:id="@+id/nativeAd"
+                   android:layout_width="match_parent"
+                   android:layout_height="300dp"
+                   android:layout_margin="@dimen/_10sdp" />
+   -->
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/instagram"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_100sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_5sdp">
 
@@ -228,7 +237,7 @@
                         android:padding="@dimen/_6sdp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_baseline_arrow_forward_24"
-                        android:tint="@android:color/white" />
+                        app:tint="@android:color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -238,6 +247,8 @@
                 android:layout_height="@dimen/_100sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:backgroundTint="@color/tiktokColor"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_5sdp">
 
@@ -279,7 +290,7 @@
                         android:padding="@dimen/_6sdp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_baseline_arrow_forward_24"
-                        android:tint="@android:color/white" />
+                        app:tint="@android:color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -289,6 +300,8 @@
                 android:layout_height="@dimen/_100sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:backgroundTint="@color/twitterColor"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_5sdp">
 
@@ -330,7 +343,7 @@
                         android:padding="@dimen/_6sdp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_baseline_arrow_forward_24"
-                        android:tint="@android:color/white" />
+                        app:tint="@android:color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
 

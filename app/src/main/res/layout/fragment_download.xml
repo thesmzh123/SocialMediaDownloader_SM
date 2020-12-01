@@ -13,9 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_5sdp"
         android:fillViewport="true"
-        android:overScrollMode="never"
         android:measureAllChildren="false"
-        android:scrollbars="none">
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -70,7 +71,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_5sdp"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        android:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -97,7 +99,7 @@
                 android:padding="@dimen/_5sdp"
                 android:scaleType="centerInside"
                 android:src="@drawable/no_file"
-                android:tint="@color/colorAccent"/>
+                app:tint="@color/colorAccent" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -110,4 +112,63 @@
                 android:textSize="@dimen/_14ssp" />
         </LinearLayout>
     </FrameLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fb"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:backgroundTint="@color/fbColor"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_5sdp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/app_name"
+                            android:padding="@dimen/_5sdp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/fb_icon" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:gravity="center"
+                            android:text="@string/facebook_video_download_s"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/_12ssp" />
+                    </LinearLayout>
+
+
+                </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

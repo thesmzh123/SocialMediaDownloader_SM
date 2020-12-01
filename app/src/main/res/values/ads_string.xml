@@ -8,10 +8,10 @@
 
 
     <!--real ads-->
-    <!--   <string name="app_id">ca-app-pub-9456305918988025~5219671588</string>
-       <string name="interstitial">ca-app-pub-9456305918988025/1280426578</string>
-       <string name="banner">ca-app-pub-9456305918988025/3906589910</string>
-       <string name="nativead">ca-app-pub-9456305918988025/3362846197</string>-->
+<!--    <string name="app_id">ca-app-pub-2504925461485700~6340020447</string>
+    <string name="interstitial">ca-app-pub-2504925461485700/8175714789</string>
+    <string name="banner">ca-app-pub-2504925461485700/8306920182</string>
+    <string name="nativead">ca-app-pub-2504925461485700/7724266566</string>-->
 
     <string-array name="videourl_filters">
         <item>mp4</item>

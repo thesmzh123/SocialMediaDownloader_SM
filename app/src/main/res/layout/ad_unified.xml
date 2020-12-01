@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     tools:ignore="RtlHardcoded,RtlSymmetry"
-    android:layout_height="@dimen/_300sdp">
+    android:layout_height="@dimen/_200sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -92,16 +92,16 @@
 
                 <ImageView
                     android:id="@+id/ad_image"
-                    android:layout_width="307dp"
-                    android:layout_height="104dp"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
                     android:contentDescription="@string/app_name" />
 
                 <com.google.android.gms.ads.formats.MediaView
                     android:id="@+id/ad_media"
-                    android:layout_width="308dp"
-                    android:layout_height="108dp"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp" />
 
@@ -110,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:orientation="horizontal"
-                    android:paddingTop="10dp"
+                    android:paddingTop="5dp"
                     android:paddingBottom="10dp">
 
                     <TextView

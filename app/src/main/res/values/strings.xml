@@ -88,4 +88,6 @@
     <string name="exit">Exit</string>
     <string name="rate_us">Rate Us</string>
     <string name="remove_ads">Remove Ads</string>
+    <string name="loading">Loading...</string>
+    <string name="facebook_video_download_s">Facebook Video Download(s)</string>
 </resources>

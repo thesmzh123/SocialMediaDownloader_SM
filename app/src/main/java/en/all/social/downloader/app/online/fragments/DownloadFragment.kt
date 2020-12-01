@@ -2,6 +2,8 @@
 
 package en.all.social.downloader.app.online.fragments
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -11,7 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ProcessLifecycleOwner
-import en.all.social.downloader.app.online.utils.SharedPrefUtils
+import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog
 import com.google.android.gms.ads.AdListener
 import en.all.social.downloader.app.online.R
 import en.all.social.downloader.app.online.adapters.DownloadFileAdapter
@@ -24,12 +26,17 @@ import en.all.social.downloader.app.online.utils.Constants.LINKEDIN_FOLDER
 import en.all.social.downloader.app.online.utils.Constants.TAGI
 import en.all.social.downloader.app.online.utils.Constants.TIKTOK_FOLDER
 import en.all.social.downloader.app.online.utils.Constants.TWITTER_FOLDER
+import en.all.social.downloader.app.online.utils.SharedPrefUtils
+import kotlinx.android.synthetic.main.download_recyclerview_layout.view.emptyView
+import kotlinx.android.synthetic.main.download_recyclerview_layout.view.recyclerView
 import kotlinx.android.synthetic.main.fragment_download.view.*
 import java.io.File
 
 
 class DownloadFragment : BaseFragment() {
     private var root1: File? = null
+    private var sheetView: View? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -171,7 +178,7 @@ class DownloadFragment : BaseFragment() {
             )
         }
 
-        init(FB_FOLDER)
+//        init(FB_FOLDER)
         changeCardColor(
             root!!.fbCard,
             root!!.instagramCard,
@@ -180,7 +187,48 @@ class DownloadFragment : BaseFragment() {
             root!!.linkdeinCard
         )
         loadInterstial()
+        root!!.fb.setOnClickListener {
+            openBottomSheet(FB_FOLDER)
+        }
         return root
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private fun openBottomSheet(folderName: String) {
+        val mBottomSheetDialog = RoundedBottomSheetDialog(requireActivity())
+        sheetView = layoutInflater.inflate(R.layout.download_recyclerview_layout, null)
+        mBottomSheetDialog.setContentView(sheetView!!)
+        mBottomSheetDialog.show()
+        object :
+            AsyncTask<Any?, Any?, Any?>() {
+            override fun onPreExecute() {
+                showDialog(getString(R.string.loading))
+
+            }
+
+            override fun onPostExecute(result: Any?) {
+                //creating our adapter
+                val adapter =
+                    DownloadFileAdapter(
+                        requireActivity(),
+                        downloadFileList!!,
+                        this@DownloadFragment
+                    )
+
+                //now adding the adapter to recyclerview
+                sheetView!!.recyclerView.adapter = adapter
+                checkEmptyState()
+                hideDialog()
+            }
+
+            override fun doInBackground(vararg p0: Any?): Any? {
+                init(folderName)
+
+
+                return null
+            }
+        }.execute(null, null, null)
+
     }
 
     private fun init(folderName: String) {
@@ -202,22 +250,22 @@ class DownloadFragment : BaseFragment() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        //creating our adapter
-        val adapter =
-            DownloadFileAdapter(requireActivity(), downloadFileList!!, this@DownloadFragment)
+        /*    //creating our adapter
+            val adapter =
+                DownloadFileAdapter(requireActivity(), downloadFileList!!, this@DownloadFragment)
 
-        //now adding the adapter to recyclerview
-        root!!.recyclerView.adapter = adapter
-        checkEmptyState()
+            //now adding the adapter to recyclerview
+            sheetView!!.recyclerView.adapter = adapter
+            checkEmptyState()*/
     }
 
     fun checkEmptyState() {
         if (downloadFileList!!.isEmpty()) {
-            root!!.recyclerView.visibility = View.GONE
-            root!!.emptyView.visibility = View.VISIBLE
+            sheetView!!.recyclerView.visibility = View.GONE
+            sheetView!!.emptyView.visibility = View.VISIBLE
         } else {
-            root!!.recyclerView.visibility = View.VISIBLE
-            root!!.emptyView.visibility = View.GONE
+            sheetView!!.recyclerView.visibility = View.VISIBLE
+            sheetView!!.emptyView.visibility = View.GONE
         }
     }
 
