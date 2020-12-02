@@ -47,7 +47,6 @@ class OtherVideosPlayer : Activity(), Player.EventListener {
             val intent = intent
             hlsVideoUri = intent.getStringExtra("videoUrl")
 
-
             // 3. Create the player
             player = ExoPlayerFactory.newSimpleInstance(this)
             player.setVideoTextureView(textureView)
@@ -56,6 +55,8 @@ class OtherVideosPlayer : Activity(), Player.EventListener {
 
             simpleExoPlayerView.player = player
             simpleExoPlayerView.keepScreenOn = true
+         /*   simpleExoPlayerView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
+            player.videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING*/
             // Add Controls listeners..
             val playerEventListener = PlayerEventListener()
             player.addListener(playerEventListener)

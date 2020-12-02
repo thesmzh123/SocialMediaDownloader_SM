@@ -17,6 +17,8 @@ import en.all.social.downloader.app.online.adapters.StatusViewAdapter
 import en.all.social.downloader.app.online.models.DownloadFile
 import en.all.social.downloader.app.online.utils.ClickListener
 import en.all.social.downloader.app.online.utils.Constants
+import en.all.social.downloader.app.online.utils.Constants.ARG_POSITION
+import en.all.social.downloader.app.online.utils.Constants.TAGI
 import en.all.social.downloader.app.online.utils.FileCheckerHelper.isVideoFile
 import en.all.social.downloader.app.online.utils.RecyclerTouchListener
 import kotlinx.android.synthetic.main.fragment_photo_videos.view.*
@@ -27,7 +29,7 @@ class VideosFragment(private val website: String) : BaseFragment() {
     fun newInstance(position: Int): VideosFragment {
         val f = VideosFragment(website)
         val b = Bundle()
-        b.putInt(Constants.ARG_POSITION, position)
+        b.putInt(ARG_POSITION, position)
         f.arguments = b
         return f
     }
@@ -70,7 +72,7 @@ class VideosFragment(private val website: String) : BaseFragment() {
                                             interstitial.show()
                                         } else {
                                             Log.d(
-                                                Constants.TAGI,
+                                                TAGI,
                                                 "App Is In Background Ad Is Not Going To Show"
                                             )
 
@@ -100,7 +102,7 @@ class VideosFragment(private val website: String) : BaseFragment() {
                     }
 
                     override fun onLongClick(view: View?, position: Int) {
-                        Log.d(Constants.TAGI, "onLongClick")
+                        Log.d(TAGI, "onLongClick")
 
                     }
                 })
@@ -143,7 +145,7 @@ class VideosFragment(private val website: String) : BaseFragment() {
             for (file in files) {
                 val fileName = file.name
                 val recordingUri = "$statusPath/$fileName"
-                Log.d(Constants.TAGI, recordingUri)
+                Log.d(TAGI, recordingUri)
                 if (isVideoFile(recordingUri)) {
                     downloadFileList!!.add(DownloadFile(recordingUri, fileName))
                 }

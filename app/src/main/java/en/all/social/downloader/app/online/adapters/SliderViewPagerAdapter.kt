@@ -41,7 +41,7 @@ class SliderViewPagerAdapter(
                 .thumbnail(0.5f)
                 .into(view.image_preview)
         }
-        view.RelativeLayoutVido.setOnClickListener {
+        view.image_preview_video.setOnClickListener {
             val intent = Intent(context, OtherVideosPlayer::class.java)
             intent.putExtra("videoUrl", image.filePath)
             context.startActivity(intent)

@@ -53,10 +53,10 @@ class HomeFragment : BaseFragment() {
             navigateFragmentByAds(R.id.nav_twittetr, getString(R.string.twitter_website))
         }
         root!!.linkedin.setOnClickListener {
-            navigateFragmentByAds(R.id.nav_linkedin, getString(R.string.linkedin_website))
+            navigateFragment(R.id.nav_linkedin, getString(R.string.linkedin_website))
         }
         root!!.tiktok.setOnClickListener {
-            navigateFragment(R.id.nav_tiktok, getString(R.string.tiktok_website))
+            navigateFragmentByAds(R.id.nav_tiktok, getString(R.string.tiktok_website))
         }
         root!!.instagram.setOnClickListener {
             navigateFragmentByAds(R.id.nav_instagram, getString(R.string.instagram_website))

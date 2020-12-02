@@ -191,7 +191,28 @@ class DownloadFragment : BaseFragment() {
 
         loadInterstial()
         root!!.fb.setOnClickListener {
-            openBottomSheet(FB_FOLDER)
+            if (!SharedPrefUtils.getBooleanData(requireActivity(), "hideAds")) {
+                if (interstitial.isLoaded) {
+                    if (ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
+                    ) {
+                        interstitial.show()
+                    } else {
+                        Log.d(TAGI, "App Is In Background Ad Is Not Going To Show")
+                    }
+                } else {
+                    openBottomSheet(FB_FOLDER)
+
+
+                }
+                interstitial.adListener = object : AdListener() {
+                    override fun onAdClosed() {
+                        requestNewInterstitial()
+                        openBottomSheet(FB_FOLDER)
+                    }
+                }
+            } else {
+                openBottomSheet(FB_FOLDER)
+            }
         }
         root!!.linkedin.setOnClickListener {
             openBottomSheet(LINKEDIN_FOLDER)
