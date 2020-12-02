@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--test ads-->
-    <string name="app_id">ca-app-pub-3940256099942544~3347511713</string>
+<!--    <string name="app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="interstitial">ca-app-pub-3940256099942544/1033173712</string>
     <string name="banner">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="nativead" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="nativead" translatable="false">ca-app-pub-3940256099942544/2247696110</string>-->
 
 
     <!--real ads-->
-<!--    <string name="app_id">ca-app-pub-2504925461485700~6340020447</string>
+    <string name="app_id">ca-app-pub-2504925461485700~6340020447</string>
     <string name="interstitial">ca-app-pub-2504925461485700/8175714789</string>
     <string name="banner">ca-app-pub-2504925461485700/8306920182</string>
-    <string name="nativead">ca-app-pub-2504925461485700/7724266566</string>-->
+    <string name="nativead">ca-app-pub-2504925461485700/7724266566</string>
 
     <string-array name="videourl_filters">
         <item>mp4</item>

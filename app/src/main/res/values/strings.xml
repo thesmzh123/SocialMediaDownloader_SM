@@ -94,4 +94,7 @@
     <string name="instagram_video_downloaded">Instagram Video Downloaded</string>
     <string name="tiktok_video_downloaded">TikTok Video Downloaded</string>
     <string name="twitter_video_downloaded">Twitter Video Downloaded</string>
+    <string name="policy_subTitle">If you click on Accept, you acknowledge that it makes the content present and all the content of our Terms of Service and implies that you have read our Privacy Policy.</string>
+    <string name="agree1">Agree</string>
+
 </resources>

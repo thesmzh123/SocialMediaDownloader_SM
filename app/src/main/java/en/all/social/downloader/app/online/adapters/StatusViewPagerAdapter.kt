@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package en.all.social.downloader.app.online.adapters
 
 import androidx.fragment.app.Fragment

@@ -9,6 +9,7 @@ import android.widget.Toast
 import en.all.social.downloader.app.online.fragments.BaseFragment
 import en.all.social.downloader.app.online.utils.Constants.TAGI
 
+
 class DownloadReceiver : BroadcastReceiver() {
     private var dmo: DownloadManager? = null
     override fun onReceive(context: Context, intent: Intent) {
@@ -31,6 +32,7 @@ class DownloadReceiver : BroadcastReceiver() {
                     if (status == DownloadManager.STATUS_SUCCESSFUL) {
                         xcoords.remove(c.getString(c.getColumnIndex(DownloadManager.COLUMN_URI)))
                         Toast.makeText(context, "Download Completed", Toast.LENGTH_LONG).show()
+
                     } else {
                         xcoords.remove(c.getString(c.getColumnIndex(DownloadManager.COLUMN_URI)))
                     }

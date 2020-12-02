@@ -37,6 +37,7 @@ import java.io.File
 class DownloadFragment : BaseFragment() {
     private var root1: File? = null
     private var sheetView: View? = null
+    private var mBottomSheetDialog:RoundedBottomSheetDialog?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -274,12 +275,18 @@ class DownloadFragment : BaseFragment() {
         return root
     }
 
+    fun hideBottomSheet(){
+        if (mBottomSheetDialog!!.isShowing) {
+            mBottomSheetDialog!!.dismiss()
+        }
+    }
     @SuppressLint("StaticFieldLeak", "InflateParams")
-    private fun openBottomSheet(folderName: String) {
-        val mBottomSheetDialog = RoundedBottomSheetDialog(requireActivity())
+    fun openBottomSheet(folderName: String) {
+         mBottomSheetDialog = RoundedBottomSheetDialog(requireActivity())
+
         sheetView = layoutInflater.inflate(R.layout.download_recyclerview_layout, null)
-        mBottomSheetDialog.setContentView(sheetView!!)
-        mBottomSheetDialog.show()
+        mBottomSheetDialog!!.setContentView(sheetView!!)
+        mBottomSheetDialog!!.show()
         object :
             AsyncTask<Any?, Any?, Any?>() {
             override fun onPreExecute() {
@@ -294,6 +301,7 @@ class DownloadFragment : BaseFragment() {
                         requireActivity(),
                         downloadFileList!!,
                         this@DownloadFragment
+                        , folderName
                     )
 
                 //now adding the adapter to recyclerview

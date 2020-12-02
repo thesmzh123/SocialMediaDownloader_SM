@@ -279,6 +279,7 @@
                 android:backgroundTint="@color/tiktokColor"
                 android:clickable="true"
                 android:focusable="true"
+                android:visibility="gone"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_5sdp">
 

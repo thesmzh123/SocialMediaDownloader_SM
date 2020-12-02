@@ -243,6 +243,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/tiktok"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_100sdp"
                 android:layout_marginTop="@dimen/_10sdp"

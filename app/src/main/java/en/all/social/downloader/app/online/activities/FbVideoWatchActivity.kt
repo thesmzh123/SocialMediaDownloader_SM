@@ -1,3 +1,5 @@
+@file:Suppress("VARIABLE_WITH_REDUNDANT_INITIALIZER")
+
 package en.all.social.downloader.app.online.activities
 
 import android.content.pm.ActivityInfo

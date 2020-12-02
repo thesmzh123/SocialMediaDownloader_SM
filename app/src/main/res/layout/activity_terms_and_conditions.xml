@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="4"
+    android:visibility="gone"
     tool:context=".activities.TermsAndConditionsActivity">
 
 

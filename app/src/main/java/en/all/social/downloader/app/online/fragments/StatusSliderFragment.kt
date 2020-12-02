@@ -5,6 +5,7 @@ package en.all.social.downloader.app.online.fragments
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Build.VERSION
@@ -31,6 +32,7 @@ import en.all.social.downloader.app.online.adapters.SliderViewPagerAdapter
 import en.all.social.downloader.app.online.models.DownloadFile
 import en.all.social.downloader.app.online.utils.Constants
 import en.all.social.downloader.app.online.utils.Constants.DOWNLOAD_PATH
+import en.all.social.downloader.app.online.utils.Constants.TAGI
 import en.all.social.downloader.app.online.utils.Constants.WHTSAPP_FOLDER
 import kotlinx.android.synthetic.main.fragment_slider_status.view.*
 import java.io.*
@@ -199,8 +201,15 @@ class StatusSliderFragment : DialogFragment() {
                     // write the output file
                     out.flush()
                     out.close()
-                    showToast(" Downloaded at: " + DOWNLOAD_PATH + File.separator + WHTSAPP_FOLDER + File.separator + inputFile.name)
 
+                    showToast(" Downloaded at: " + DOWNLOAD_PATH + File.separator + WHTSAPP_FOLDER + File.separator + inputFile.name)
+                    MediaScannerConnection.scanFile(requireContext(),
+                        arrayOf(File(DOWNLOAD_PATH + File.separator + WHTSAPP_FOLDER + File.separator + inputFile.name).toString()),
+                        null
+                    ) { path, uri ->
+                        Log.i(TAGI, "Scanned $path:")
+                        Log.i(TAGI, "-> uri=$uri")
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

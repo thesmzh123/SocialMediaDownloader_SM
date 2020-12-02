@@ -50,7 +50,8 @@ import kotlin.math.pow
 class DownloadFileAdapter(
     val context: Context,
     private val downloadFileList: ArrayList<DownloadFile>,
-    private val downloadFragment: DownloadFragment
+    private val downloadFragment: DownloadFragment,
+    private val folderName: String
 ) :
     RecyclerView.Adapter<DownloadFileAdapter.MyViewHolder>() {
     private val units =
@@ -224,6 +225,8 @@ class DownloadFileAdapter(
                         deleteFile(position)
 
                     }
+//                    deleteFile(position)
+
                     return@setOnMenuItemClickListener true
                 }
                 R.id.shareop -> {
@@ -287,7 +290,8 @@ class DownloadFileAdapter(
                 downloadFileList.removeAt(position)
                 notifyItemChanged(position)
                 notifyItemRangeRemoved(0, downloadFileList.size)
-                downloadFragment.checkEmptyState()
+                downloadFragment.hideBottomSheet()
+                downloadFragment.openBottomSheet(folderName)
             }
             .setNegativeText(context.getString(R.string.no))
             .onNegative { dialog, which ->
